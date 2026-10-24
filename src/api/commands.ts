@@ -62,6 +62,60 @@ export interface EntryInput {
   content?: string | null
   projectId?: number | null
   tags?: string[]
+  fields?: Record<string, unknown> | null
+  refs?: RefItem[] | null
+}
+
+export interface RefItem {
+  label: string
+  path: string
+}
+
+export interface Entry {
+  id: number
+  date: string
+  time: string | null
+  kind: string
+  title: string
+  content: string
+  projectId: number | null
+  tags: string[]
+  fields: Record<string, unknown> | null
+  refs: RefItem[]
+  createdAt: string | null
+  updatedAt: string | null
+}
+
+export interface HistoryItem {
+  snapshot: Record<string, unknown>
+  savedAt: string
+}
+
+export interface TaskLite {
+  id: number
+  title: string
+  projectId: number | null
+  priority: number
+}
+
+export interface DdlLite {
+  id: number
+  name: string
+  category: string | null
+  dueDate: string
+}
+
+export interface TrajectoryItem {
+  src: 'entry' | 'task_done' | 'ddl'
+  at: string
+  entry?: Entry
+  task?: TaskLite
+  ddl?: DdlLite
+}
+
+export interface TrajectoryDay {
+  date: string
+  items: TrajectoryItem[]
 }
 
 export interface ParsedDraft {
@@ -159,6 +213,27 @@ export const deleteTask = (id: number) => invoke<void>('delete_task', { id })
 export const parseQuick = (text: string, defaultKind?: string) =>
   invoke<ParsedDraft>('parse_quick', { text, defaultKind })
 export const createEntry = (entry: EntryInput) => invoke<number>('create_entry', { entry })
+
+export interface ListEntriesParams {
+  from?: string
+  to?: string
+  kind?: string
+  projectId?: number | null
+  q?: string
+}
+
+export const listEntries = (p: ListEntriesParams = {}) =>
+  invoke<Entry[]>('list_entries', { ...p })
+export const updateEntry = (id: number, entry: EntryInput) =>
+  invoke<void>('update_entry', { id, entry })
+export const deleteEntry = (id: number) => invoke<void>('delete_entry', { id })
+export const entryHistory = (id: number) => invoke<HistoryItem[]>('entry_history', { id })
+export const todayEntryCount = () => invoke<number>('today_entry_count')
+
+// ---------- 轨迹投影 ----------
+
+export const getTrajectory = (from: string, to: string) =>
+  invoke<TrajectoryDay[]>('get_trajectory', { from, to })
 
 // ---------- 统计 ----------
 

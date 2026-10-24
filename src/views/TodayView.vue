@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import InlineTaskAdd from '../components/InlineTaskAdd.vue'
 import TaskItem from '../components/TaskItem.vue'
+import { todayEntryCount } from '../api/commands'
 import { useProjectsStore } from '../stores/projects'
 import { useTasksStore } from '../stores/tasks'
 import { useTimeStore } from '../stores/time'
@@ -11,6 +12,7 @@ import { dueInfo, todayStr } from '../utils/date'
 const tasks = useTasksStore()
 const projects = useProjectsStore()
 const time = useTimeStore()
+const todayEntries = ref(0)
 
 onMounted(() => {
   void projects.load()
@@ -18,6 +20,7 @@ onMounted(() => {
   void tasks.loadStats()
   void tasks.loadActive()
   void time.load()
+  void todayEntryCount().then((n) => (todayEntries.value = n))
 })
 
 const now = new Date()
@@ -112,6 +115,10 @@ function projectActiveCount(projectId: number) {
       <p class="empty">
         新建 {{ tasks.stats.tasksCreated }} · 完成 {{ tasks.stats.tasksCompleted }} · 记录
         {{ tasks.stats.entriesCreated }} 条
+      </p>
+      <p class="empty traj-link">
+        🧭 今日轨迹：{{ todayEntries }} 条 ——
+        <RouterLink to="/trajectory">进入轨迹页</RouterLink>
       </p>
     </section>
   </div>

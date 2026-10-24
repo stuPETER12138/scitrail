@@ -7,3 +7,4 @@ pub mod projects;
 pub mod quick;
 pub mod stats;
 pub mod tasks;
+pub mod trajectory;

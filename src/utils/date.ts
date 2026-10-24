@@ -8,6 +8,13 @@ export function todayStr(): string {
   return fmtDate(new Date())
 }
 
+/** base(YYYY-MM-DD) + n 天 */
+export function addDays(base: string, n: number): string {
+  const [y, m, d] = base.split('-').map(Number)
+  const dt = new Date(Date.UTC(y, m - 1, d + n))
+  return fmtDate(new Date(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()))
+}
+
 /** 'YYYY-MM-DD HH:MM' → 'YYYY-MM-DD' */
 export function dateOnly(s: string): string {
   return s.slice(0, 10)

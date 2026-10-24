@@ -18,6 +18,7 @@ pub fn run() {
             quick::show_main(app);
         }))
         .plugin(tauri_plugin_log::Builder::new().build())
+        .plugin(tauri_plugin_opener::init())
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, _shortcut, event| {
@@ -88,6 +89,12 @@ pub fn run() {
             commands::milestones::create_milestone,
             commands::milestones::update_milestone,
             commands::milestones::delete_milestone,
+            commands::entries::list_entries,
+            commands::entries::update_entry,
+            commands::entries::delete_entry,
+            commands::entries::entry_history,
+            commands::entries::today_entry_count,
+            commands::trajectory::get_trajectory,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

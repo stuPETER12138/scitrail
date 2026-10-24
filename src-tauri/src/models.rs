@@ -119,3 +119,42 @@ impl Milestone {
         })
     }
 }
+
+#[derive(serde::Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct Entry {
+    pub id: i64,
+    pub date: String,
+    pub time: Option<String>,
+    pub kind: String,
+    pub title: String,
+    pub content: String,
+    pub project_id: Option<i64>,
+    pub tags: Vec<String>,
+    pub fields: serde_json::Value,
+    pub refs: Vec<crate::services::entries::RefItem>,
+    pub created_at: Option<String>,
+    pub updated_at: Option<String>,
+}
+
+impl Entry {
+    pub fn from_row(row: &Row<'_>) -> rusqlite::Result<Self> {
+        let tags: String = row.get(7)?;
+        let fields: String = row.get(8)?;
+        let refs: String = row.get(9)?;
+        Ok(Entry {
+            id: row.get(0)?,
+            date: row.get(1)?,
+            time: row.get(2)?,
+            kind: row.get(3)?,
+            title: row.get(4)?,
+            content: row.get(5)?,
+            project_id: row.get(6)?,
+            tags: serde_json::from_str(&tags).unwrap_or_default(),
+            fields: serde_json::from_str(&fields).unwrap_or(serde_json::Value::Null),
+            refs: serde_json::from_str(&refs).unwrap_or_default(),
+            created_at: row.get(10)?,
+            updated_at: row.get(11)?,
+        })
+    }
+}
