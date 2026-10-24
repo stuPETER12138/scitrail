@@ -1,4 +1,9 @@
-# 科迹 SciTrail
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/design/logo-dark.svg">
+    <img src="docs/design/logo-light.svg" alt="科迹 SciTrail" width="480">
+  </picture>
+</p>
 
 **面向博士生的本地优先科研轨迹与任务管理器** · A local-first research trajectory & task manager for PhD students.
 

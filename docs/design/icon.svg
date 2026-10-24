@@ -1,0 +1,15 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <title>科迹 SciTrail 应用图标：S 形轨迹，实心足迹点，终点目标环</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f86dc"/>
+      <stop offset="1" stop-color="#33619f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="230" fill="url(#bg)"/>
+  <path d="M 404 800 C 724 800 724 640 512 512 C 300 384 300 224 620 224"
+        fill="none" stroke="#ffffff" stroke-width="58" stroke-linecap="round"/>
+  <circle cx="404" cy="800" r="42" fill="#ffffff"/>
+  <circle cx="512" cy="512" r="42" fill="#ffffff"/>
+  <circle cx="620" cy="224" r="58" fill="none" stroke="#ffffff" stroke-width="30"/>
+</svg>
