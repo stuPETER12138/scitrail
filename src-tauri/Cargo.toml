@@ -1,0 +1,33 @@
+[package]
+name = "scitrail"
+version = "0.1.0"
+description = "科迹 SciTrail — 本地优先的博士生科研轨迹与任务管理器"
+authors = ["SciTrail contributors"]
+license = "MIT"
+edition = "2024"
+rust-version = "1.90"
+
+[lib]
+name = "scitrail_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.7.4" }
+
+[dependencies]
+tauri = { version = "2.12.5", features = ["tray-icon"] }
+tauri-plugin-log = "2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+log = "0.4"
+tauri-plugin-single-instance = "2.5.4"
+tauri-plugin-global-shortcut = "2.4.1"
+rusqlite = { version = "0.40.2", features = ["bundled"] }
+rusqlite_migration = "2.5.0"
+argon2 = "0.5"
+rand_core = { version = "0.6", features = ["getrandom"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

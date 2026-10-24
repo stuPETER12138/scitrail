@@ -1,0 +1,63 @@
+/* 科迹 SciTrail 设计令牌 —— 《开发设计说明书》§6.3 极简清单风 */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#fafafa, #171b21);
+  --card: light-dark(#ffffff, #1e242b);
+  --fg: light-dark(#232a31, #dde4ea);
+  --muted-fg: light-dark(#6b7681, #93a0ac);
+  --line: light-dark(#e8ecf0, #2c343d);
+  --hover: light-dark(#eef1f5, #262e37);
+  --accent: #4a7fd6;
+  --accent-fg: #ffffff;
+  --danger: #e5484d;
+  --warn: #d97706;
+  --ok: #2f9e68;
+  --radius: 10px;
+  --sidebar-w: 200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+input,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* 页面通用结构 */
+.page {
+  padding: 18px 24px;
+  max-width: 980px;
+}
+
+.page h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+
+.page .placeholder {
+  margin-top: 32px;
+  color: var(--muted-fg);
+  text-align: center;
+  font-size: 13px;
+}

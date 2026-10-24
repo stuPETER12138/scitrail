@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Rust format check
+        run: cargo fmt --all --check
+        working-directory: src-tauri
+
+      - name: Rust clippy
+        run: cargo clippy --all-targets -- -D warnings
+        working-directory: src-tauri
+
+      - name: Rust tests (含 bundled FTS5 验证)
+        run: cargo test
+        working-directory: src-tauri
+
+      - name: Frontend typecheck & build
+        run: pnpm build
