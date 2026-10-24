@@ -315,6 +315,40 @@ export const semesterSummary = () => invoke<SemesterSummary>('semester_summary')
 export const exportFile = (name: string, content: string) =>
   invoke<string>('export_file', { name, content })
 
+// ---------- 论文投稿流水线（M2-2） ----------
+
+export interface Paper {
+  id: number
+  title: string
+  venue: string | null
+  stage: string
+  submitDate: string | null
+  expectReply: string | null
+  reviseDeadline: string | null
+  projectId: number | null
+  ddlId: number | null
+  note: string | null
+  createdAt: string | null
+  updatedAt: string | null
+}
+
+export interface PaperInput {
+  title: string
+  venue?: string | null
+  stage?: string
+  submitDate?: string | null
+  expectReply?: string | null
+  reviseDeadline?: string | null
+  projectId?: number | null
+  note?: string | null
+}
+
+export const listPapers = () => invoke<Paper[]>('list_papers')
+export const createPaper = (input: PaperInput) => invoke<number>('create_paper', { input })
+export const updatePaper = (id: number, input: PaperInput) =>
+  invoke<void>('update_paper', { id, input })
+export const deletePaper = (id: number) => invoke<void>('delete_paper', { id })
+
 // ---------- 统计 ----------
 
 export const statsWeek = () => invoke<WeekStats>('stats_week')

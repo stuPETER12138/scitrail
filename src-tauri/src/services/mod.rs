@@ -1,5 +1,6 @@
 pub mod backup;
 pub mod entries;
+pub mod papers;
 pub mod quick_parse;
 pub mod settings;
 pub mod stats;

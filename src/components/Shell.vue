@@ -11,9 +11,10 @@ const NAV = [
   { key: '3', path: '/trajectory', label: '🧭 轨迹' },
   { key: '4', path: '/projects', label: '📁 课题' },
   { key: '5', path: '/ddl', label: '⏰ DDL' },
-  { key: '6', path: '/weekly', label: '📄 周报' },
-  { key: '7', path: '/review', label: '📈 回顾' },
-  { key: '8', path: '/settings', label: '⚙ 设置' },
+  { key: '6', path: '/papers', label: '📄 论文' },
+  { key: '7', path: '/weekly', label: '🗓 周报' },
+  { key: '8', path: '/review', label: '📈 回顾' },
+  { key: '9', path: '/settings', label: '⚙ 设置' },
 ]
 
 function onKeydown(e: KeyboardEvent) {

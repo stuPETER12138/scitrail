@@ -4,6 +4,7 @@ pub mod ddls;
 pub mod entries;
 pub mod meta;
 pub mod milestones;
+pub mod papers;
 pub mod projects;
 pub mod quick;
 pub mod stats;

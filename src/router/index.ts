@@ -11,6 +11,7 @@ const router = createRouter({
     { path: '/ddl', component: () => import('../views/DdlView.vue') },
     { path: '/weekly', component: () => import('../views/WeeklyView.vue') },
     { path: '/review', component: () => import('../views/ReviewView.vue') },
+    { path: '/papers', component: () => import('../views/PapersView.vue') },
     { path: '/settings', component: () => import('../views/SettingsView.vue') },
   ],
 })

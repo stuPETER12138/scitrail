@@ -158,3 +158,39 @@ impl Entry {
         })
     }
 }
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Paper {
+    pub id: i64,
+    pub title: String,
+    pub venue: Option<String>,
+    pub stage: String,
+    pub submit_date: Option<String>,
+    pub expect_reply: Option<String>,
+    pub revise_deadline: Option<String>,
+    pub project_id: Option<i64>,
+    pub ddl_id: Option<i64>,
+    pub note: Option<String>,
+    pub created_at: Option<String>,
+    pub updated_at: Option<String>,
+}
+
+impl Paper {
+    pub fn from_row(row: &Row<'_>) -> rusqlite::Result<Self> {
+        Ok(Paper {
+            id: row.get(0)?,
+            title: row.get(1)?,
+            venue: row.get(2)?,
+            stage: row.get(3)?,
+            submit_date: row.get(4)?,
+            expect_reply: row.get(5)?,
+            revise_deadline: row.get(6)?,
+            project_id: row.get(7)?,
+            ddl_id: row.get(8)?,
+            note: row.get(9)?,
+            created_at: row.get(10)?,
+            updated_at: row.get(11)?,
+        })
+    }
+}

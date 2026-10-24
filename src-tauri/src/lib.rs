@@ -132,6 +132,10 @@ pub fn run() {
             commands::stats::get_review_stats,
             commands::stats::semester_summary,
             commands::backup::export_file,
+            commands::papers::list_papers,
+            commands::papers::create_paper,
+            commands::papers::update_paper,
+            commands::papers::delete_paper,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
