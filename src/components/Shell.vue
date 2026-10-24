@@ -12,9 +12,10 @@ const NAV = [
   { key: '4', path: '/projects', label: '📁 课题' },
   { key: '5', path: '/ddl', label: '⏰ DDL' },
   { key: '6', path: '/papers', label: '📄 论文' },
-  { key: '7', path: '/weekly', label: '🗓 周报' },
-  { key: '8', path: '/review', label: '📈 回顾' },
-  { key: '9', path: '/settings', label: '⚙ 设置' },
+  { key: '7', path: '/achievements', label: '🏆 成果' },
+  { key: '8', path: '/weekly', label: '🗓 周报' },
+  { key: '9', path: '/review', label: '📈 回顾' },
+  { key: '0', path: '/settings', label: '⚙ 设置' },
 ]
 
 function onKeydown(e: KeyboardEvent) {

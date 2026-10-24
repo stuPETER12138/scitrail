@@ -349,6 +349,88 @@ export const updatePaper = (id: number, input: PaperInput) =>
   invoke<void>('update_paper', { id, input })
 export const deletePaper = (id: number) => invoke<void>('delete_paper', { id })
 
+// ---------- 成果库与毕业要求（M2-3） ----------
+
+export const ACHIEVEMENT_KINDS = [
+  '期刊论文',
+  '会议论文',
+  '发明专利',
+  '实用新型',
+  '软件著作权',
+  '竞赛获奖',
+  '其他',
+] as const
+
+export const ACHIEVEMENT_STATUSES = ['在投', '已录用', '已发表', '已授权', '已获奖', '已登记']
+
+export interface Achievement {
+  id: number
+  kind: string
+  title: string
+  authorRank: string | null
+  status: string
+  date: string | null
+  venue: string | null
+  doi: string | null
+  projectId: number | null
+  paperId: number | null
+  note: string | null
+  createdAt: string | null
+}
+
+export interface AchievementInput {
+  kind: string
+  title: string
+  authorRank?: string | null
+  status?: string
+  date?: string | null
+  venue?: string | null
+  doi?: string | null
+  projectId?: number | null
+  note?: string | null
+}
+
+export interface GradRequirement {
+  id: number
+  item: string
+  needCount: number
+  matchKinds: string
+  matchStatus: string
+  note: string | null
+  sort: number
+}
+
+export interface RequirementInput {
+  item: string
+  needCount?: number
+  matchKinds?: string | null
+  matchStatus?: string | null
+  note?: string | null
+  sort?: number
+}
+
+export const listAchievements = () => invoke<Achievement[]>('list_achievements')
+export const createAchievement = (input: AchievementInput) =>
+  invoke<number>('create_achievement', { input })
+export const updateAchievement = (id: number, input: AchievementInput) =>
+  invoke<void>('update_achievement', { id, input })
+export const deleteAchievement = (id: number) => invoke<void>('delete_achievement', { id })
+
+export interface AchievementExport {
+  filename: string
+  content: string
+}
+
+export const achievementsMarkdown = () =>
+  invoke<AchievementExport>('achievements_markdown')
+
+export const listRequirements = () => invoke<GradRequirement[]>('list_requirements')
+export const createRequirement = (input: RequirementInput) =>
+  invoke<number>('create_requirement', { input })
+export const updateRequirement = (id: number, input: RequirementInput) =>
+  invoke<void>('update_requirement', { id, input })
+export const deleteRequirement = (id: number) => invoke<void>('delete_requirement', { id })
+
 // ---------- 统计 ----------
 
 export const statsWeek = () => invoke<WeekStats>('stats_week')

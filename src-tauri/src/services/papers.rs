@@ -172,11 +172,16 @@ pub fn update(conn: &Connection, id: i64, input: PaperInput) -> Result<(), Strin
     let venue = clean(input.venue.clone());
     let expect = clean(input.expect_reply.clone());
 
-    let old_ddl: Option<i64> = conn
+    let (old_ddl, old_stage, old_venue, old_project): (
+        Option<i64>,
+        String,
+        Option<String>,
+        Option<i64>,
+    ) = conn
         .query_row(
-            "SELECT ddl_id FROM paper WHERE id=?1 AND deleted_at IS NULL",
+            "SELECT ddl_id, stage, venue, project_id FROM paper WHERE id=?1 AND deleted_at IS NULL",
             params![id],
-            |r| r.get(0),
+            |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?, r.get(3)?)),
         )
         .map_err(|_| "论文不存在".to_string())?;
 
@@ -211,6 +216,11 @@ pub fn update(conn: &Connection, id: i64, input: PaperInput) -> Result<(), Strin
         .map_err(|e| e.to_string())?;
     if changed == 0 {
         return Err("论文不存在".into());
+    }
+
+    // 流转到「录用」：自动写入成果库（按 paper_id 去重）
+    if old_stage != "录用" && stage == "录用" {
+        super::achievements::auto_from_paper(conn, id, &title, old_venue.as_deref(), old_project)?;
     }
     Ok(())
 }

@@ -194,3 +194,65 @@ impl Paper {
         })
     }
 }
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Achievement {
+    pub id: i64,
+    pub kind: String,
+    pub title: String,
+    pub author_rank: Option<String>,
+    pub status: String,
+    pub date: Option<String>,
+    pub venue: Option<String>,
+    pub doi: Option<String>,
+    pub project_id: Option<i64>,
+    pub paper_id: Option<i64>,
+    pub note: Option<String>,
+    pub created_at: Option<String>,
+}
+
+impl Achievement {
+    pub fn from_row(row: &Row<'_>) -> rusqlite::Result<Self> {
+        Ok(Achievement {
+            id: row.get(0)?,
+            kind: row.get(1)?,
+            title: row.get(2)?,
+            author_rank: row.get(3)?,
+            status: row.get(4)?,
+            date: row.get(5)?,
+            venue: row.get(6)?,
+            doi: row.get(7)?,
+            project_id: row.get(8)?,
+            paper_id: row.get(9)?,
+            note: row.get(10)?,
+            created_at: row.get(11)?,
+        })
+    }
+}
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GradRequirement {
+    pub id: i64,
+    pub item: String,
+    pub need_count: i64,
+    pub match_kinds: String,
+    pub match_status: String,
+    pub note: Option<String>,
+    pub sort: i64,
+}
+
+impl GradRequirement {
+    pub fn from_row(row: &Row<'_>) -> rusqlite::Result<Self> {
+        Ok(GradRequirement {
+            id: row.get(0)?,
+            item: row.get(1)?,
+            need_count: row.get(2)?,
+            match_kinds: row.get(3)?,
+            match_status: row.get(4)?,
+            note: row.get(5)?,
+            sort: row.get(6)?,
+        })
+    }
+}

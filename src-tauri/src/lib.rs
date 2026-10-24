@@ -136,6 +136,15 @@ pub fn run() {
             commands::papers::create_paper,
             commands::papers::update_paper,
             commands::papers::delete_paper,
+            commands::achievements::list_achievements,
+            commands::achievements::create_achievement,
+            commands::achievements::update_achievement,
+            commands::achievements::delete_achievement,
+            commands::achievements::achievements_markdown,
+            commands::achievements::list_requirements,
+            commands::achievements::create_requirement,
+            commands::achievements::update_requirement,
+            commands::achievements::delete_requirement,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
