@@ -168,7 +168,7 @@ section {
 }
 
 h3 {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 500;
   color: var(--muted-fg);
   margin: 0 0 8px;
@@ -191,7 +191,7 @@ dd {
 
 .path {
   font-family: ui-monospace, Consolas, monospace;
-  font-size: 12px;
+  font-size: var(--text-sm);
   word-break: break-all;
 }
 
@@ -231,7 +231,7 @@ dd {
   gap: 12px;
   padding: 6px 0;
   border-bottom: 1px dashed var(--line);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .bk-row:last-child {
@@ -264,7 +264,7 @@ dd {
 
 .note {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 8px 0 0;
 }
 

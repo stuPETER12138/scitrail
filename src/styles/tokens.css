@@ -1,4 +1,4 @@
-/* 科迹 SciTrail 设计令牌 —— 《开发设计说明书》§6.3 极简清单风 */
+/* 科迹 SciTrail 设计令牌 —— 数值唯一来源；规则见 docs/DESIGN.md */
 :root {
   color-scheme: light dark;
   --bg: light-dark(#fafafa, #171b21);
@@ -14,6 +14,16 @@
   --ok: #2f9e68;
   --radius: 10px;
   --sidebar-w: 200px;
+
+  /* 排版刻度：组件禁止使用刻度之外的字号（唯一例外见 DESIGN.md） */
+  --text-2xs: 10px; /* 时序条刻度、极小元信息 */
+  --text-xs: 11px;  /* 徽章、chip、标签、计数 */
+  --text-sm: 12px;  /* 次要说明、表单标签、提示 */
+  --text-md: 13px;  /* 列表行、账本行、表格正文 */
+  --text-base: 14px;/* 默认正文 */
+  --text-lg: 16px;  /* 页面标题 h2 */
+  --text-xl: 19px;  /* KPI 数值等强调数字 */
+  --text-2xl: 28px; /* 解锁页 logo */
 }
 
 * {
@@ -28,7 +38,7 @@ body {
 
 body {
   font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif;
-  font-size: 14px;
+  font-size: var(--text-base);
   background: var(--bg);
   color: var(--fg);
 }
@@ -50,7 +60,7 @@ button {
 }
 
 .page h2 {
-  font-size: 16px;
+  font-size: var(--text-lg);
   font-weight: 500;
   margin: 0 0 4px;
 }
@@ -59,5 +69,5 @@ button {
   margin-top: 32px;
   color: var(--muted-fg);
   text-align: center;
-  font-size: 13px;
+  font-size: var(--text-md);
 }

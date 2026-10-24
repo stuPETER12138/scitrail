@@ -125,12 +125,12 @@ const dragRangeStyle = computed(() =>
 }
 
 .label {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
 }
 
 .hint {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   color: var(--muted-fg);
   opacity: 0.8;
 }
@@ -155,7 +155,7 @@ const dragRangeStyle = computed(() =>
   position: absolute;
   top: 16px;
   transform: translateX(-50%);
-  font-size: 9px;
+  font-size: var(--text-2xs);
   color: var(--muted-fg);
 }
 
@@ -171,7 +171,7 @@ const dragRangeStyle = computed(() =>
   position: absolute;
   top: 2px;
   bottom: 2px;
-  background: color-mix(in srgb, #4a7fd6 16%, transparent);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
   border-left: 1px dashed #4a7fd6;
   border-right: 1px dashed #4a7fd6;
   border-radius: 4px;

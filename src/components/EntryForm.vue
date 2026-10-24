@@ -220,7 +220,7 @@ async function save() {
   background: var(--bg);
   color: var(--fg);
   outline: none;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .row.head .kind {
@@ -245,7 +245,7 @@ async function save() {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
 }
 
@@ -253,7 +253,7 @@ async function save() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
 }
 
@@ -266,7 +266,7 @@ async function save() {
 .ref-row .path {
   flex: 1;
   font-family: ui-monospace, Consolas, monospace;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .mini {
@@ -274,7 +274,7 @@ async function save() {
   background: var(--bg);
   border-radius: 6px;
   padding: 2px 8px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   cursor: pointer;
   color: var(--muted-fg);
 }
@@ -285,7 +285,7 @@ async function save() {
 
 .error {
   color: var(--danger);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0;
 }
 

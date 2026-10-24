@@ -179,7 +179,7 @@ section {
 }
 
 h3 {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 500;
   margin: 0 0 4px;
   color: var(--muted-fg);
@@ -206,7 +206,7 @@ h3.week {
 }
 
 .badge {
-  font-size: 11px;
+  font-size: var(--text-xs);
   border-radius: 9px;
   padding: 1px 8px;
   background: var(--hover);
@@ -239,7 +239,7 @@ h3.week {
 .time,
 .cat,
 .proj {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
   display: inline-flex;
   align-items: center;
@@ -264,7 +264,7 @@ h3.week {
   background: none;
   color: var(--muted-fg);
   cursor: pointer;
-  font-size: 12px;
+  font-size: var(--text-sm);
   padding: 2px 6px;
   border-radius: 5px;
 }
@@ -286,7 +286,7 @@ hr {
 }
 
 .ms-title {
-  font-size: 16px;
+  font-size: var(--text-lg);
   font-weight: 500;
 }
 
@@ -335,7 +335,7 @@ hr {
   padding: 4px 6px;
   background: var(--bg);
   color: var(--fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .ms-row select {
@@ -344,6 +344,6 @@ hr {
   padding: 4px 6px;
   background: var(--bg);
   color: var(--fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 </style>

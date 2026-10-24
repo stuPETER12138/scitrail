@@ -253,19 +253,19 @@ function pickDay(date: string) {
 }
 
 .kpi .v {
-  font-size: 20px;
+  font-size: var(--text-xl);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
 .kpi small {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
   font-weight: 400;
 }
 
 .kpi .k {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
   margin-top: 2px;
 }
@@ -275,7 +275,7 @@ section {
 }
 
 h3 {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 500;
   color: var(--muted-fg);
   margin: 0 0 8px;
@@ -297,7 +297,7 @@ h3 {
   background: var(--card);
   border-radius: 6px;
   padding: 1px 9px;
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
   cursor: pointer;
 }
@@ -311,7 +311,7 @@ h3 {
 .legend {
   display: flex;
   gap: 14px;
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
   margin-bottom: 4px;
 }
@@ -356,7 +356,7 @@ h3 {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .d-dot {
@@ -397,11 +397,11 @@ h3 {
 
 .dim {
   color: var(--muted-fg);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .small {
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .btn {
@@ -419,7 +419,7 @@ h3 {
 }
 
 .msg {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ok);
   margin: 8px 0 0;
   word-break: break-all;
@@ -459,7 +459,7 @@ h3 {
   gap: 10px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--line);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .m-acts {
@@ -474,17 +474,17 @@ h3 {
 }
 
 :deep(.md h1) {
-  font-size: 17px;
+  font-size: var(--text-lg);
   margin: 0 0 10px;
 }
 
 :deep(.md h2) {
-  font-size: 14px;
+  font-size: var(--text-base);
   margin: 16px 0 6px;
 }
 
 :deep(.md li) {
-  font-size: 13px;
+  font-size: var(--text-md);
   margin: 3px 0;
 }
 </style>

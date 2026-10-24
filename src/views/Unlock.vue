@@ -69,18 +69,18 @@ async function submit() {
 }
 
 .logo {
-  font-size: 30px;
+  font-size: var(--text-2xl);
 }
 
 h1 {
-  font-size: 17px;
+  font-size: var(--text-lg);
   font-weight: 500;
   margin: 8px 0 2px;
 }
 
 .hint {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0 0 16px;
 }
 
@@ -122,7 +122,7 @@ button:disabled {
 
 .error {
   color: var(--danger);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 12px 0 0;
 }
 </style>

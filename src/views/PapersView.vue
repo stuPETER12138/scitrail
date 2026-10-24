@@ -273,14 +273,14 @@ async function remove() {
 }
 
 .head h2 {
-  font-size: 16px;
+  font-size: var(--text-lg);
   font-weight: 500;
   margin: 0;
 }
 
 .hint {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .btn {
@@ -320,7 +320,7 @@ async function remove() {
 }
 
 .col-h {
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: 500;
   padding: 2px 4px 8px;
 }
@@ -339,13 +339,13 @@ async function remove() {
 }
 
 .c-title {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 500;
   margin-bottom: 3px;
 }
 
 .c-venue {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
   margin-bottom: 6px;
 }
@@ -357,7 +357,7 @@ async function remove() {
 }
 
 .badge {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   border-radius: 8px;
   padding: 1px 7px;
   background: var(--hover);
@@ -393,7 +393,7 @@ async function remove() {
 .col-empty {
   color: var(--muted-fg);
   text-align: center;
-  font-size: 11px;
+  font-size: var(--text-xs);
   opacity: 0.5;
 }
 
@@ -451,7 +451,7 @@ async function remove() {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
 }
 
@@ -464,7 +464,7 @@ async function remove() {
   background: var(--bg);
   color: var(--fg);
   outline: none;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .f input:focus,
@@ -476,7 +476,7 @@ async function remove() {
 .error {
   grid-column: span 2;
   color: var(--danger);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0;
 }
 

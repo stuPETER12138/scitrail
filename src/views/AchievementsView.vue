@@ -455,7 +455,7 @@ const KIND_COLORS: Record<string, string> = {
 }
 
 .head h2 {
-  font-size: 16px;
+  font-size: var(--text-lg);
   font-weight: 500;
   margin: 0;
 }
@@ -465,7 +465,7 @@ section {
 }
 
 h3 {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 500;
   color: var(--muted-fg);
   margin: 0 0 8px;
@@ -481,7 +481,7 @@ h3 {
 
 .btn.sm {
   padding: 4px 10px;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .btn.primary {
@@ -495,7 +495,7 @@ h3 {
 }
 
 .msg {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ok);
   margin: 8px 0 0;
   word-break: break-all;
@@ -529,11 +529,11 @@ h3 {
 
 .m-item {
   font-weight: 500;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .m-count {
-  font-size: 13px;
+  font-size: var(--text-md);
   color: var(--muted-fg);
   font-variant-numeric: tabular-nums;
   flex: none;
@@ -566,7 +566,7 @@ h3 {
 }
 
 .tag {
-  font-size: 11px;
+  font-size: var(--text-xs);
   border-radius: 9px;
   padding: 1px 8px;
 }
@@ -588,7 +588,7 @@ h3 {
 
 .edit {
   margin-left: auto;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
   cursor: pointer;
 }
@@ -599,13 +599,13 @@ h3 {
 
 .m-note {
   margin: 6px 0 0;
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
 }
 
 .empty {
   color: var(--muted-fg);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 /* 成果列表 */
@@ -623,7 +623,7 @@ h3 {
   padding: 9px 14px;
   border-bottom: 1px solid var(--line);
   cursor: pointer;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .a-row:last-child {
@@ -635,7 +635,7 @@ h3 {
 }
 
 .a-kind {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   color: #fff;
   border-radius: 6px;
   padding: 2px 7px;
@@ -652,7 +652,7 @@ h3 {
 
 .a-meta {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin-left: auto;
   flex: none;
   max-width: 46%;
@@ -662,7 +662,7 @@ h3 {
 }
 
 .a-status {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--ok);
   flex: none;
 }
@@ -672,7 +672,7 @@ h3 {
 }
 
 .a-auto {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   color: var(--muted-fg);
   border: 1px dashed var(--line);
   border-radius: 8px;
@@ -734,7 +734,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
 }
 
@@ -747,7 +747,7 @@ h3 {
   background: var(--bg);
   color: var(--fg);
   outline: none;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .f input:focus,
@@ -760,7 +760,7 @@ h3 {
   flex-direction: row;
   align-items: center;
   gap: 7px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   cursor: pointer;
 }
 
@@ -775,7 +775,7 @@ h3 {
   background: var(--bg);
   border-radius: 9px;
   padding: 2px 9px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
   cursor: pointer;
 }
@@ -789,7 +789,7 @@ h3 {
 .error {
   grid-column: span 2;
   color: var(--danger);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0;
 }
 

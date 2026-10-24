@@ -72,7 +72,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 .brand .sub {
   color: var(--muted-fg);
   font-weight: 400;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 nav {
@@ -102,14 +102,14 @@ nav {
 .nav-item .kbd {
   margin-left: auto;
   color: var(--muted-fg);
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 
 .side-foot {
   margin-top: auto;
   padding: 8px 10px 2px;
   color: var(--muted-fg);
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 
 .main {

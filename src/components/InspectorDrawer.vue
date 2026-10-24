@@ -189,12 +189,12 @@ function onSaved() {
   gap: 10px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--line);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .when {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .close {
@@ -216,7 +216,7 @@ function onSaved() {
 
 .title {
   margin: 0;
-  font-size: 15px;
+  font-size: var(--text-lg);
   font-weight: 500;
 }
 
@@ -227,7 +227,7 @@ function onSaved() {
 }
 
 .chip {
-  font-size: 11px;
+  font-size: var(--text-xs);
   border-radius: 9px;
   padding: 1px 8px;
   background: var(--hover);
@@ -249,7 +249,7 @@ function onSaved() {
 .kv {
   display: flex;
   gap: 10px;
-  font-size: 13px;
+  font-size: var(--text-md);
   padding: 4px 0;
   border-bottom: 1px dashed var(--line);
 }
@@ -258,7 +258,7 @@ function onSaved() {
   width: 70px;
   flex: none;
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .kv .v {
@@ -270,7 +270,7 @@ function onSaved() {
 .content {
   margin: 4px 0 0;
   white-space: pre-wrap;
-  font-size: 13px;
+  font-size: var(--text-md);
   color: var(--fg);
 }
 
@@ -285,7 +285,7 @@ function onSaved() {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .ref-label {
@@ -294,7 +294,7 @@ function onSaved() {
 }
 
 .path {
-  font-size: 11px;
+  font-size: var(--text-xs);
   background: var(--hover);
   border-radius: 4px;
   padding: 1px 6px;
@@ -306,7 +306,7 @@ function onSaved() {
   background: var(--bg);
   border-radius: 6px;
   padding: 2px 8px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   cursor: pointer;
   flex: none;
 }
@@ -324,7 +324,7 @@ function onSaved() {
   border-radius: 8px;
   padding: 6px 12px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .btn.danger {
@@ -333,7 +333,7 @@ function onSaved() {
 
 .error,
 .msg {
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0;
 }
 
@@ -347,7 +347,7 @@ function onSaved() {
 
 .dim {
   color: var(--muted-fg);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .hist-row {
@@ -355,7 +355,7 @@ function onSaved() {
   gap: 10px;
   padding: 6px 0;
   border-bottom: 1px dashed var(--line);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .hist-title {

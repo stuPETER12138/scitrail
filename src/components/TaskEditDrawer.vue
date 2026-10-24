@@ -180,7 +180,7 @@ async function remove() {
   background: none;
   cursor: pointer;
   color: var(--muted-fg);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .body {
@@ -196,7 +196,7 @@ async function remove() {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
   flex: 1;
 }
@@ -210,7 +210,7 @@ async function remove() {
   background: var(--bg);
   color: var(--fg);
   outline: none;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .field input:focus,
@@ -251,7 +251,7 @@ async function remove() {
 
 .error {
   color: var(--danger);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0;
 }
 </style>

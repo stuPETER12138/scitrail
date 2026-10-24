@@ -179,7 +179,7 @@ async function doExport() {
 }
 
 .meta {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
   margin: 4px 0;
 }
@@ -194,7 +194,7 @@ async function doExport() {
   background: var(--card);
   color: var(--fg);
   font-family: ui-monospace, Consolas, 'Microsoft YaHei', monospace;
-  font-size: 13px;
+  font-size: var(--text-md);
   line-height: 1.7;
   resize: vertical;
   outline: none;
@@ -215,7 +215,7 @@ async function doExport() {
 }
 
 .msg {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ok);
   margin: 10px 0 0;
 }
@@ -225,17 +225,17 @@ async function doExport() {
 }
 
 :deep(.md h1) {
-  font-size: 18px;
+  font-size: var(--text-xl);
   margin: 0 0 12px;
 }
 
 :deep(.md h2) {
-  font-size: 15px;
+  font-size: var(--text-lg);
   margin: 18px 0 6px;
 }
 
 :deep(.md h3) {
-  font-size: 13px;
+  font-size: var(--text-md);
   margin: 12px 0 4px;
   color: var(--muted-fg);
 }
@@ -247,6 +247,6 @@ async function doExport() {
 
 :deep(.md li) {
   margin: 3px 0;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 </style>

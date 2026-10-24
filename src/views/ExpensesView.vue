@@ -119,7 +119,7 @@ const maxProject = computed(() => ledger.value?.byProject[0]?.total ?? 1)
 
 .hint {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 4px 0 0;
 }
 
@@ -158,7 +158,7 @@ code {
 }
 
 .v {
-  font-size: 20px;
+  font-size: var(--text-xl);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
@@ -172,7 +172,7 @@ code {
 }
 
 .k {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
   margin-top: 2px;
 }
@@ -182,7 +182,7 @@ section {
 }
 
 h3 {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 500;
   color: var(--muted-fg);
   margin: 0 0 8px;
@@ -199,7 +199,7 @@ h3 {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .d-dot {
@@ -252,7 +252,7 @@ h3 {
   align-items: center;
   padding: 8px 14px;
   border-bottom: 1px solid var(--line);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .row:last-child {
@@ -261,7 +261,7 @@ h3 {
 
 .head-row {
   color: var(--muted-fg);
-  font-size: 11px;
+  font-size: var(--text-xs);
   background: var(--hover);
 }
 
@@ -279,7 +279,7 @@ h3 {
 
 .t-reason {
   color: var(--muted-fg);
-  font-size: 11px;
+  font-size: var(--text-xs);
   margin-left: 6px;
 }
 
@@ -291,7 +291,7 @@ h3 {
 
 .t-proj {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -303,7 +303,7 @@ h3 {
   padding: 3px 6px;
   background: var(--bg);
   color: var(--fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
   cursor: pointer;
 }
 
@@ -317,7 +317,7 @@ h3 {
 
 .empty {
   color: var(--muted-fg);
-  font-size: 13px;
+  font-size: var(--text-md);
   padding: 16px 0;
 }
 </style>

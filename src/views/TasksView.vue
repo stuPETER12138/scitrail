@@ -171,7 +171,7 @@ async function onDrop(status: string, e: DragEvent) {
   padding: 5px 14px;
   cursor: pointer;
   color: var(--muted-fg);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .tab.on {
@@ -182,7 +182,7 @@ async function onDrop(status: string, e: DragEvent) {
 
 .empty {
   color: var(--muted-fg);
-  font-size: 13px;
+  font-size: var(--text-md);
   padding: 20px 0;
 }
 
@@ -208,7 +208,7 @@ async function onDrop(status: string, e: DragEvent) {
 }
 
 .col-h {
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: 500;
   padding: 2px 4px 8px;
   color: var(--muted-fg);
@@ -233,7 +233,7 @@ async function onDrop(status: string, e: DragEvent) {
 }
 
 .ct {
-  font-size: 13px;
+  font-size: var(--text-md);
   margin-bottom: 5px;
 }
 
@@ -241,7 +241,7 @@ async function onDrop(status: string, e: DragEvent) {
   display: flex;
   gap: 6px;
   align-items: center;
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
 }
 
@@ -250,12 +250,12 @@ async function onDrop(status: string, e: DragEvent) {
   color: #fff;
   border-radius: 4px;
   padding: 0 5px;
-  font-size: 10px;
+  font-size: var(--text-2xs);
 }
 
 .col-empty {
   color: var(--muted-fg);
-  font-size: 11px;
+  font-size: var(--text-xs);
   text-align: center;
   margin: 30px 0;
   opacity: 0.7;

@@ -152,7 +152,7 @@ async function save() {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
 }
 
@@ -164,7 +164,7 @@ async function save() {
   background: var(--bg);
   color: var(--fg);
   outline: none;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .field input:focus,
@@ -176,13 +176,13 @@ async function save() {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 13px;
+  font-size: var(--text-md);
   cursor: pointer;
 }
 
 .error {
   color: var(--danger);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0;
 }
 

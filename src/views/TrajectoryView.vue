@@ -310,13 +310,13 @@ function dayLabel(date: string): string {
 }
 
 .page-head h2 {
-  font-size: 16px;
+  font-size: var(--text-lg);
   font-weight: 500;
   margin: 0;
 }
 
 .follow-tag {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
 }
 
@@ -329,7 +329,7 @@ function dayLabel(date: string): string {
   background: var(--card);
   border-radius: 6px;
   padding: 1px 8px;
-  font-size: 11px;
+  font-size: var(--text-xs);
   cursor: pointer;
   color: var(--muted-fg);
 }
@@ -343,7 +343,7 @@ function dayLabel(date: string): string {
   position: absolute;
   left: 10px;
   top: 8px;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .composer input {
@@ -368,7 +368,7 @@ function dayLabel(date: string): string {
 }
 
 .chip {
-  font-size: 11px;
+  font-size: var(--text-xs);
   border-radius: 9px;
   padding: 1px 8px;
   background: var(--hover);
@@ -392,7 +392,7 @@ function dayLabel(date: string): string {
 
 .filter-bar {
   margin: 8px 0 0;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--accent);
   display: flex;
   align-items: center;
@@ -417,7 +417,7 @@ function dayLabel(date: string): string {
   padding: 6px;
   margin-bottom: 12px;
   background: none;
-  font-size: 12px;
+  font-size: var(--text-sm);
   cursor: pointer;
 }
 
@@ -444,13 +444,13 @@ function dayLabel(date: string): string {
 
 .dlabel {
   font-weight: 500;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .ddate,
 .dcount {
   color: var(--muted-fg);
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 
 .row {
@@ -459,7 +459,7 @@ function dayLabel(date: string): string {
   gap: 9px;
   padding: 7px 8px;
   border-bottom: 1px solid var(--line);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .row .ico {
@@ -501,7 +501,7 @@ function dayLabel(date: string): string {
 }
 
 .pri {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   background: var(--danger);
   color: #fff;
   border-radius: 4px;
@@ -513,7 +513,7 @@ function dayLabel(date: string): string {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
   flex: none;
 }
@@ -525,7 +525,7 @@ function dayLabel(date: string): string {
 }
 
 .tag {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
   flex: none;
 }

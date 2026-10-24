@@ -134,7 +134,7 @@ input:focus {
 }
 
 .chip {
-  font-size: 11px;
+  font-size: var(--text-xs);
   border-radius: 9px;
   padding: 1px 8px;
   background: var(--hover);
@@ -162,19 +162,19 @@ input:focus {
 }
 
 .title-preview {
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: 500;
 }
 
 .error {
   margin: 0;
   color: var(--danger);
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 
 .hint {
   margin: 0;
   color: var(--muted-fg);
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 </style>

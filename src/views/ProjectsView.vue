@@ -154,7 +154,7 @@ async function removeProject(id: number, name: string) {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--muted-fg);
   flex: 1;
 }
@@ -184,7 +184,7 @@ async function removeProject(id: number, name: string) {
 
 .error {
   color: var(--danger);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0;
 }
 
@@ -224,7 +224,7 @@ async function removeProject(id: number, name: string) {
 
 .meta {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .status {
@@ -233,7 +233,7 @@ async function removeProject(id: number, name: string) {
   background: var(--bg);
   color: var(--fg);
   padding: 4px 6px;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .del {
@@ -241,7 +241,7 @@ async function removeProject(id: number, name: string) {
   background: none;
   color: var(--muted-fg);
   cursor: pointer;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .del:hover {

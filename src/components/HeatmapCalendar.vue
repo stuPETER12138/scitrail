@@ -116,7 +116,7 @@ const WEEKDAYS = ['一', '', '三', '', '五', '', '']
   display: flex;
   gap: 3px;
   padding-left: 20px;
-  font-size: 10px;
+  font-size: var(--text-2xs);
   color: var(--muted-fg);
   height: 12px;
 }
@@ -136,7 +136,7 @@ const WEEKDAYS = ['一', '', '三', '', '五', '', '']
   display: flex;
   flex-direction: column;
   gap: 3px;
-  font-size: 9px;
+  font-size: var(--text-2xs);
   color: var(--muted-fg);
   width: 16px;
 }
@@ -197,7 +197,7 @@ const WEEKDAYS = ['一', '', '三', '', '五', '', '']
   align-items: center;
   gap: 4px;
   margin-top: 8px;
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
 }
 

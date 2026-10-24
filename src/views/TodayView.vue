@@ -127,7 +127,7 @@ function projectActiveCount(projectId: number) {
 <style scoped>
 .date {
   color: var(--muted-fg);
-  font-size: 12px;
+  font-size: var(--text-sm);
   margin: 0 0 8px;
 }
 
@@ -136,7 +136,7 @@ section {
 }
 
 h3 {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 500;
   color: var(--muted-fg);
   margin: 0 0 8px;
@@ -150,13 +150,13 @@ h3 {
   color: var(--danger);
   border-radius: 9px;
   padding: 0 8px;
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 
 .empty {
   margin: 0;
   color: var(--muted-fg);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .empty a {
@@ -169,7 +169,7 @@ h3 {
   justify-content: space-between;
   padding: 6px 2px;
   border-bottom: 1px solid var(--line);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .cd-row.ms span:first-child {
@@ -177,7 +177,7 @@ h3 {
 }
 
 .badge {
-  font-size: 11px;
+  font-size: var(--text-xs);
   border-radius: 9px;
   padding: 1px 8px;
   background: var(--hover);
@@ -231,6 +231,6 @@ h3 {
 .meta {
   margin-top: 6px;
   color: var(--muted-fg);
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 </style>

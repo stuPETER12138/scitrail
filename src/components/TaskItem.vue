@@ -58,7 +58,7 @@ const due = computed(() => (props.task.dueDate ? dueInfo(props.task.dueDate) : n
   border-radius: 50%;
   background: transparent;
   color: #fff;
-  font-size: 10px;
+  font-size: var(--text-2xs);
   line-height: 1;
   padding: 0;
   cursor: pointer;
@@ -94,11 +94,11 @@ const due = computed(() => (props.task.dueDate ? dueInfo(props.task.dueDate) : n
 }
 
 .repeat {
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 
 .pri {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   border-radius: 4px;
   padding: 0 5px;
   flex: none;
@@ -118,7 +118,7 @@ const due = computed(() => (props.task.dueDate ? dueInfo(props.task.dueDate) : n
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--muted-fg);
   flex: none;
 }
@@ -130,7 +130,7 @@ const due = computed(() => (props.task.dueDate ? dueInfo(props.task.dueDate) : n
 }
 
 .due {
-  font-size: 11px;
+  font-size: var(--text-xs);
   flex: none;
   color: var(--muted-fg);
 }
