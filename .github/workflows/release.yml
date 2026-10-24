@@ -37,5 +37,15 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'SciTrail ${{ github.ref_name }}'
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
+          releaseBody: |
+            科迹 SciTrail —— 本地优先的博士生科研轨迹与任务管理器。
+
+            **v0.1.2（M1 + M2 功能全量）**
+            - M1 骨架：任务/课题/DDL/里程碑 · 轨迹账本（UNION 投影 · 检查器 · 修改历史）· 周报一键生成 · 每日自动备份与一键恢复
+            - M2：📈 回顾页（一年热力图 · 连续天数 · 趋势）· 📄 论文投稿流水线（八阶段看板 · 放榜 DDL 自动同步 · "该催了"）· 🏆 成果库与毕业要求对照 · 💰 报销垫付台账
+            - ⌨️ 全局速录：Ctrl+Alt+K（`实 完成#催化 1150℃×2h 明天 9:00`）
+            - 🎨 DESIGN.md 设计系统与排版令牌化
+
+            Windows 安装包（NSIS）随本 Release 附带；首次启动需设置解锁口令。
