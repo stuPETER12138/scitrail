@@ -49,3 +49,16 @@ jobs:
             - 🎨 DESIGN.md 设计系统与排版令牌化
 
             Windows 安装包（NSIS）随本 Release 附带；首次启动需设置解锁口令。
+            安装时 SmartScreen 提示「更多信息 → 仍要运行」（无签名证书，详见 README）。
+
+      - name: 生成 SHA256 校验文件并附到 Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $files = Get-ChildItem "src-tauri/target/release/bundle/nsis/*-setup.exe" -ErrorAction SilentlyContinue
+          if (-not $files) { Write-Host "no setup found"; exit 0 }
+          $lines = foreach ($f in $files) { "$(Get-FileHash $f.FullName -Algorithm SHA256 | Select-Object -ExpandProperty Hash)  $($f.Name)" }
+          $lines | Out-File -Encoding ascii sha256.txt
+          Get-Content sha256.txt
+          gh release upload ${{ github.ref_name }} sha256.txt --clobber

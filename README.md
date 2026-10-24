@@ -26,6 +26,15 @@
 
 设计文档见 [docs/](docs/)：需求报告、五方案设计对比、开发设计说明书、[DESIGN.md 设计系统](docs/DESIGN.md)（改 UI 前必读）。
 
+## 安装说明（Windows SmartScreen 提示）
+
+安装包未购买代码签名证书（个人开源项目的成本考量），首次运行安装包会弹出 **"Windows 已保护你的电脑"**：
+
+1. 点击 **「更多信息」**
+2. 点击 **「仍要运行」**
+
+这是 SmartScreen 对无签名新软件的标准提示，并非安装包损坏。可用 Release 附带的 `sha256.txt` 核对文件哈希后放心安装（PowerShell：`Get-FileHash SciTrail_*_x64-setup.exe`）。
+
 ## 技术栈
 
 Tauri 2（Rust 内核 + WebView2）· rusqlite(bundled) + SQLite WAL + FTS5 · Vue 3 + Vite + TypeScript + Pinia · 不引重型 UI 库
