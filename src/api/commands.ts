@@ -235,6 +235,40 @@ export const todayEntryCount = () => invoke<number>('today_entry_count')
 export const getTrajectory = (from: string, to: string) =>
   invoke<TrajectoryDay[]>('get_trajectory', { from, to })
 
+// ---------- 周报 ----------
+
+export interface WeeklyReport {
+  weekStart: string
+  content: string
+  generatedAt: string | null
+  editedAt: string | null
+}
+
+export const generateWeekly = (weekStart?: string) =>
+  invoke<string>('generate_weekly', { weekStart })
+export const listWeeklies = () => invoke<WeeklyReport[]>('list_weeklies')
+export const saveWeekly = (weekStart: string, content: string) =>
+  invoke<void>('save_weekly', { weekStart, content })
+export const exportWeekly = (weekStart: string) =>
+  invoke<string>('export_weekly', { weekStart })
+
+// ---------- 备份与导出 ----------
+
+export interface BackupLog {
+  id: number
+  file: string
+  sizeBytes: number | null
+  status: string
+  createdAt: string
+}
+
+export const runBackup = () => invoke<string>('run_backup')
+export const listBackups = () => invoke<BackupLog[]>('list_backups')
+export const restoreBackup = (file: string) => invoke<void>('restore_backup', { file })
+export const exportData = (format: 'json' | 'md') => invoke<string>('export_data', { format })
+export const changePassword = (oldPassword: string, newPassword: string) =>
+  invoke<void>('change_password', { oldPassword, newPassword })
+
 // ---------- 统计 ----------
 
 export const statsWeek = () => invoke<WeekStats>('stats_week')

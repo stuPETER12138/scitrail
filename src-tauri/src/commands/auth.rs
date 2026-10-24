@@ -25,6 +25,30 @@ fn verify_password(hash: &str, password: &str) -> bool {
         .is_ok()
 }
 
+/// 修改口令：验证旧口令后写入新哈希
+#[tauri::command]
+pub fn change_password(
+    state: State<'_, AppState>,
+    old_password: String,
+    new_password: String,
+) -> Result<(), String> {
+    if new_password.trim().len() < 4 {
+        return Err("新口令至少 4 位".into());
+    }
+    let conn = state.db.lock().map_err(|e| e.to_string())?;
+    match settings::get(&conn, KEY_PASSWORD_HASH)? {
+        Some(hash) => {
+            if !verify_password(&hash, &old_password) {
+                return Err("旧口令不正确".into());
+            }
+            let new_hash = hash_password(new_password.trim())?;
+            settings::set(&conn, KEY_PASSWORD_HASH, &new_hash)?;
+            Ok(())
+        }
+        None => Err("尚未设置口令".into()),
+    }
+}
+
 /// 是否已设置口令（false = 首次运行，unlock 将执行「创建」语义）
 #[tauri::command]
 pub fn has_password(state: State<'_, AppState>) -> Result<bool, String> {

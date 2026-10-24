@@ -19,6 +19,7 @@ pub fn run() {
         }))
         .plugin(tauri_plugin_log::Builder::new().build())
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, _shortcut, event| {
@@ -49,6 +50,30 @@ pub fn run() {
 
             tray::setup(app)?;
             quick::create_quick(app.handle())?;
+
+            // 每日自动备份：15 分钟轮询，00:30 之后今天还没备份就补上（含启动补查）
+            let handle = app.handle().clone();
+            std::thread::spawn(move || {
+                use chrono::Timelike;
+                loop {
+                    {
+                        let now = chrono::Local::now();
+                        let early_morning = now.hour() == 0 && now.minute() < 30;
+                        let state = handle.state::<AppState>();
+                        if !early_morning
+                            && let Ok(conn) = state.conn()
+                            && crate::services::backup::should_run(&conn)
+                            && let Some(dir) = handle.path().app_data_dir().ok()
+                        {
+                            match crate::services::backup::run_backup(&conn, &dir.join("backups")) {
+                                Ok(name) => log::info!("自动备份完成：{name}"),
+                                Err(e) => log::warn!("自动备份失败：{e}"),
+                            }
+                        }
+                    }
+                    std::thread::sleep(std::time::Duration::from_secs(15 * 60));
+                }
+            });
             Ok(())
         })
         .on_window_event(|window, event| {
@@ -95,6 +120,15 @@ pub fn run() {
             commands::entries::entry_history,
             commands::entries::today_entry_count,
             commands::trajectory::get_trajectory,
+            commands::weekly::generate_weekly,
+            commands::weekly::list_weeklies,
+            commands::weekly::save_weekly,
+            commands::weekly::export_weekly,
+            commands::backup::run_backup,
+            commands::backup::list_backups,
+            commands::backup::restore_backup,
+            commands::backup::export_data,
+            commands::auth::change_password,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

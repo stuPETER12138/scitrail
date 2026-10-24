@@ -1,4 +1,5 @@
 pub mod auth;
+pub mod backup;
 pub mod ddls;
 pub mod entries;
 pub mod meta;
@@ -8,3 +9,4 @@ pub mod quick;
 pub mod stats;
 pub mod tasks;
 pub mod trajectory;
+pub mod weekly;

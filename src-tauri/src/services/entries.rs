@@ -15,7 +15,7 @@ pub struct RefItem {
     pub path: String,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct EntryInput {
     pub date: Option<String>,
