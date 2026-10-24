@@ -16,17 +16,19 @@ pub fn init(path: &Path) -> Result<Connection, rusqlite::Error> {
     Ok(conn)
 }
 
+/// 测试夹具：内存库 + 完整迁移（供各 service 测试复用）
+#[cfg(test)]
+pub(crate) fn test_conn() -> Connection {
+    let mut conn = Connection::open_in_memory().unwrap();
+    conn.pragma_update(None, "foreign_keys", "ON").unwrap();
+    migration::migrations().to_latest(&mut conn).unwrap();
+    conn
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use rusqlite::params;
-
-    pub(crate) fn test_conn() -> Connection {
-        let mut conn = Connection::open_in_memory().unwrap();
-        conn.pragma_update(None, "foreign_keys", "ON").unwrap();
-        migration::migrations().to_latest(&mut conn).unwrap();
-        conn
-    }
 
     #[test]
     fn migrations_create_all_tables() {

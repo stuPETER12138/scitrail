@@ -29,3 +29,39 @@ impl Project {
         })
     }
 }
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Task {
+    pub id: i64,
+    pub title: String,
+    pub note: Option<String>,
+    pub project_id: Option<i64>,
+    pub project_name: Option<String>,
+    pub milestone_id: Option<i64>,
+    pub priority: i64,
+    pub due_date: Option<String>,
+    pub status: String,
+    pub repeat_rule: Option<String>,
+    pub completed_at: Option<String>,
+    pub created_at: Option<String>,
+}
+
+impl Task {
+    pub fn from_row(row: &Row<'_>) -> rusqlite::Result<Self> {
+        Ok(Task {
+            id: row.get(0)?,
+            title: row.get(1)?,
+            note: row.get(2)?,
+            project_id: row.get(3)?,
+            project_name: row.get(4)?,
+            milestone_id: row.get(5)?,
+            priority: row.get(6)?,
+            due_date: row.get(7)?,
+            status: row.get(8)?,
+            repeat_rule: row.get(9)?,
+            completed_at: row.get(10)?,
+            created_at: row.get(11)?,
+        })
+    }
+}
