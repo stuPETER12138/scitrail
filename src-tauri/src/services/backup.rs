@@ -296,6 +296,22 @@ pub fn export_weekly(
     Ok(path.to_string_lossy().into_owned())
 }
 
+/// 通用文本导出（学期总结等）：文件名做净化，写入 exports 并返回路径
+pub fn export_named(exports_dir: &Path, filename: &str, content: &str) -> Result<String, String> {
+    const INVALID: [char; 9] = ['\\', '/', ':', '*', '?', '"', '<', '>', '|'];
+    let safe: String = filename
+        .chars()
+        .map(|c| if INVALID.contains(&c) { '_' } else { c })
+        .collect();
+    if safe.trim().is_empty() {
+        return Err("文件名无效".into());
+    }
+    std::fs::create_dir_all(exports_dir).map_err(|e| e.to_string())?;
+    let path = exports_dir.join(safe);
+    std::fs::write(&path, content).map_err(|e| e.to_string())?;
+    Ok(path.to_string_lossy().into_owned())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

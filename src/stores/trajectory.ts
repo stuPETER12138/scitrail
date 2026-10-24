@@ -23,11 +23,11 @@ export const useTrajectoryStore = defineStore('trajectory', () => {
   const noMore = ref(false)
   const loading = ref(false)
 
-  async function load() {
+  async function load(fromOverride?: string) {
     loading.value = true
     try {
       const to = todayStr()
-      const from = addDays(to, -(WINDOW - 1))
+      const from = fromOverride ?? addDays(to, -(WINDOW - 1))
       days.value = await getTrajectory(from, to)
       oldest.value = from
       noMore.value = false

@@ -1,3 +1,5 @@
+use crate::services::stats as review_svc;
+use crate::services::stats::ReviewStats;
 use crate::state::AppState;
 use chrono::{Datelike, Duration, Local};
 use serde::Serialize;
@@ -37,4 +39,30 @@ pub fn stats_week(state: State<'_, AppState>) -> Result<WeekStats, String> {
         ))?,
         week_start,
     })
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SemesterSummary {
+    pub filename: String,
+    pub content: String,
+}
+
+/// 回顾页统计：KPI + 逐日计数（热力图/趋势）+ 课题分布
+#[tauri::command]
+pub fn get_review_stats(
+    state: State<'_, AppState>,
+    from: String,
+    to: String,
+) -> Result<ReviewStats, String> {
+    let conn = state.conn()?;
+    review_svc::review(&conn, &from, &to)
+}
+
+/// 学期总结 Markdown（预览用；导出走 export_file）
+#[tauri::command]
+pub fn semester_summary(state: State<'_, AppState>) -> Result<SemesterSummary, String> {
+    let conn = state.conn()?;
+    let (filename, content) = review_svc::semester_markdown(&conn)?;
+    Ok(SemesterSummary { filename, content })
 }

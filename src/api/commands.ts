@@ -269,6 +269,52 @@ export const exportData = (format: 'json' | 'md') => invoke<string>('export_data
 export const changePassword = (oldPassword: string, newPassword: string) =>
   invoke<void>('change_password', { oldPassword, newPassword })
 
+// ---------- 回顾统计（M2-1） ----------
+
+export interface DayCount {
+  date: string
+  experiment: number
+  literature: number
+  expense: number
+  meeting: number
+  note: number
+  tasksDone: number
+}
+
+export interface Kpis {
+  totalEntries: number
+  totalTasksDone: number
+  totalExperiments: number
+  currentStreak: number
+  longestStreak: number
+}
+
+export interface ProjectDist {
+  projectId: number | null
+  name: string
+  color: string | null
+  count: number
+}
+
+export interface ReviewStats {
+  from: string
+  to: string
+  kpis: Kpis
+  daily: DayCount[]
+  distribution: ProjectDist[]
+}
+
+export interface SemesterSummary {
+  filename: string
+  content: string
+}
+
+export const getReviewStats = (from: string, to: string) =>
+  invoke<ReviewStats>('get_review_stats', { from, to })
+export const semesterSummary = () => invoke<SemesterSummary>('semester_summary')
+export const exportFile = (name: string, content: string) =>
+  invoke<string>('export_file', { name, content })
+
 // ---------- 统计 ----------
 
 export const statsWeek = () => invoke<WeekStats>('stats_week')

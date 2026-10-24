@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import DayStrip from '../components/DayStrip.vue'
 import InspectorDrawer from '../components/InspectorDrawer.vue'
 import type { StripTick } from '../components/DayStrip.vue'
@@ -12,8 +13,9 @@ import {
 } from '../api/commands'
 import { useProjectsStore } from '../stores/projects'
 import { useTrajectoryStore, KIND_META } from '../stores/trajectory'
-import { dueInfo, todayStr } from '../utils/date'
+import { addDays, dueInfo, todayStr } from '../utils/date'
 
+const route = useRoute()
 const traj = useTrajectoryStore()
 const projects = useProjectsStore()
 
@@ -42,12 +44,32 @@ watch(
 )
 
 onMounted(async () => {
-  await traj.load()
+  await focusLoad()
   void projects.load()
   void nextTick(scrollToBottom)
   // 速录小窗保存后若本页开着，自动刷新账本
   unlisten = await onChanged(() => void traj.load())
 })
+
+/// 回顾页热力图点击跳转：?date=YYYY-MM-DD → 加载覆盖该日的窗口并定位
+async function focusLoad() {
+  const q = route.query.date
+  const focus = typeof q === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(q) ? q : ''
+  if (focus) {
+    follow.value = false
+    await traj.load(addDays(focus, -3))
+    await nextTick()
+    document.getElementById(`day-${focus}`)?.scrollIntoView({ block: 'start' })
+  } else {
+    follow.value = true
+    await traj.load()
+  }
+}
+
+watch(
+  () => route.query.date,
+  () => void focusLoad(),
+)
 
 onUnmounted(() => unlisten?.())
 
@@ -213,7 +235,7 @@ function dayLabel(date: string): string {
         {{ traj.noMore ? '已到最早' : traj.loading ? '加载中…' : '↑ 加载更早 7 天' }}
       </button>
 
-      <section v-for="day in traj.days" :key="day.date" class="day">
+      <section v-for="day in traj.days" :id="`day-${day.date}`" :key="day.date" class="day">
         <div class="day-h">
           <span class="dlabel">{{ dayLabel(day.date) }}</span>
           <span class="ddate">{{ day.date }}</span>

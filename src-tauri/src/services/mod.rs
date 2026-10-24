@@ -2,6 +2,7 @@ pub mod backup;
 pub mod entries;
 pub mod quick_parse;
 pub mod settings;
+pub mod stats;
 pub mod tasks;
 pub mod time;
 pub mod trajectory;

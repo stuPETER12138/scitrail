@@ -21,7 +21,12 @@ pub struct DayCount {
 
 impl DayCount {
     pub fn total(&self) -> i64 {
-        self.experiment + self.literature + self.expense + self.meeting + self.note + self.tasks_done
+        self.experiment
+            + self.literature
+            + self.expense
+            + self.meeting
+            + self.note
+            + self.tasks_done
     }
 }
 
@@ -182,14 +187,16 @@ pub fn review(conn: &Connection, from: &str, to: &str) -> Result<ReviewStats, St
 
     // KPI（全生命周期口径）
     let count = |sql: &str| -> Result<i64, String> {
-        conn.query_row(sql, [], |r| r.get(0)).map_err(|e| e.to_string())
+        conn.query_row(sql, [], |r| r.get(0))
+            .map_err(|e| e.to_string())
     };
     let total_entries = count("SELECT COUNT(*) FROM entry WHERE deleted_at IS NULL")?;
     let total_tasks_done =
         count("SELECT COUNT(*) FROM task WHERE deleted_at IS NULL AND status='完成'")?;
     let total_experiments =
         count("SELECT COUNT(*) FROM entry WHERE deleted_at IS NULL AND kind='experiment'")?;
-    let (current_streak, longest_streak) = streaks(&activity_days(conn)?, Local::now().date_naive());
+    let (current_streak, longest_streak) =
+        streaks(&activity_days(conn)?, Local::now().date_naive());
 
     // 课题投入分布（近 90 天：entry + 完成任务）
     let d90 = fmt(Local::now().date_naive() - Duration::days(89));
@@ -241,9 +248,14 @@ pub fn review(conn: &Connection, from: &str, to: &str) -> Result<ReviewStats, St
                 .unwrap_or(("（已删除课题）".into(), None)),
             None => ("未关联".to_string(), None),
         };
-        distribution.push(ProjectDist { project_id: pid, name, color, count: n });
+        distribution.push(ProjectDist {
+            project_id: pid,
+            name,
+            color,
+            count: n,
+        });
     }
-    distribution.sort_by(|a, b| b.count.cmp(&a.count));
+    distribution.sort_by_key(|d| std::cmp::Reverse(d.count));
 
     Ok(ReviewStats {
         from: from.to_string(),
@@ -281,7 +293,6 @@ pub fn semester_markdown(conn: &Connection) -> Result<(String, String), String> 
     let (start_s, today_s) = (fmt(start), fmt(today));
 
     let stats = review(conn, &start_s, &today_s)?;
-    let total: i64 = stats.daily.iter().map(|d| d.total()).sum();
     let active_days = stats.daily.iter().filter(|d| d.total() > 0).count();
 
     let mut md = format!("# 科迹 · 学期总结（{start_s} ~ {today_s}）\n\n");
@@ -290,7 +301,6 @@ pub fn semester_markdown(conn: &Connection) -> Result<(String, String), String> 
         stats.kpis.total_entries, stats.kpis.total_tasks_done, stats.kpis.total_experiments,
         active_days, stats.kpis.current_streak, stats.kpis.longest_streak,
     ));
-    let _ = total;
 
     // 按月分组列任务与条目
     let mut month = String::new();
@@ -304,7 +314,9 @@ pub fn semester_markdown(conn: &Connection) -> Result<(String, String), String> 
         )
         .map_err(|e| e.to_string())?;
     let done: Vec<(String, String, Option<String>)> = stmt
-        .query_map(params![start_s, today_s], |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?)))
+        .query_map(params![start_s, today_s], |r| {
+            Ok((r.get(0)?, r.get(1)?, r.get(2)?))
+        })
         .map_err(|e| e.to_string())?
         .collect::<Result<_, _>>()
         .map_err(|e| e.to_string())?;
@@ -334,7 +346,10 @@ pub fn semester_markdown(conn: &Connection) -> Result<(String, String), String> 
     ));
 
     if let Some(top) = stats.distribution.first() {
-        md.push_str(&format!("\n投入最多：{}（{} 条记录）\n", top.name, top.count));
+        md.push_str(&format!(
+            "\n投入最多：{}（{} 条记录）\n",
+            top.name, top.count
+        ));
     }
     Ok((format!("学期总结-{start_s}~{today_s}.md"), md))
 }
@@ -345,27 +360,6 @@ mod tests {
     use crate::db::test_conn;
     use crate::services::entries::{self, EntryInput};
     use chrono::Duration as Dur;
-
-    fn entry_at(date: &str, kind: &str) {
-        entries::create(
-            &test_conn_placeholder(),
-            EntryInput {
-                date: Some(date.into()),
-                time: None,
-                kind: kind.into(),
-                title: "t".into(),
-                content: None,
-                project_id: None,
-                tags: None,
-                fields: None,
-                refs: None,
-            },
-        )
-        .unwrap();
-    }
-    fn test_conn_placeholder() -> Connection {
-        unreachable!("占位，实际用下面的共享连接方式")
-    }
 
     #[test]
     fn streaks_logic() {
@@ -424,10 +418,10 @@ mod tests {
         // 当前连续 3 天（今天/昨天/前天都有活动）
         assert_eq!(r.kpis.current_streak, 3);
         assert_eq!(r.kpis.longest_streak, 3);
-        // 分布：未关联 4 条（3 entry + 1 task）
+        // 分布：未关联 4 条（3 entry + 1 完成任务，均在 90 天窗口内）
         assert_eq!(r.distribution.len(), 1);
         assert_eq!(r.distribution[0].name, "未关联");
-        assert_eq!(r.distribution[0].count, 3); // 分布窗口 90 天含全部，entry=3
+        assert_eq!(r.distribution[0].count, 4);
 
         // 学期总结生成
         let (name, md) = semester_markdown(&conn).unwrap();

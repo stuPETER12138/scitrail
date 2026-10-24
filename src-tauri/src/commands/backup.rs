@@ -55,3 +55,12 @@ pub fn export_data(
     let _ = tauri_plugin_opener::reveal_item_in_dir(&path);
     Ok(path)
 }
+
+/// 通用文件导出（学期总结等）：写 exports 并在资源管理器定位
+#[tauri::command]
+pub fn export_file(app: AppHandle, name: String, content: String) -> Result<String, String> {
+    let dir = app.path().app_data_dir().map_err(|e| e.to_string())?;
+    let path = crate::services::backup::export_named(&dir.join("exports"), &name, &content)?;
+    let _ = tauri_plugin_opener::reveal_item_in_dir(&path);
+    Ok(path)
+}
