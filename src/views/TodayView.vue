@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
+import { RouterLink } from 'vue-router'
 import InlineTaskAdd from '../components/InlineTaskAdd.vue'
 import TaskItem from '../components/TaskItem.vue'
 import { useProjectsStore } from '../stores/projects'
 import { useTasksStore } from '../stores/tasks'
-import { todayStr } from '../utils/date'
+import { useTimeStore } from '../stores/time'
+import { dueInfo, todayStr } from '../utils/date'
 
 const tasks = useTasksStore()
 const projects = useProjectsStore()
+const time = useTimeStore()
 
 onMounted(() => {
   void projects.load()
   void tasks.loadToday()
   void tasks.loadStats()
   void tasks.loadActive()
+  void time.load()
 })
 
 const now = new Date()
@@ -21,6 +25,22 @@ const dateLabel = `${now.getFullYear()} 年 ${now.getMonth() + 1} 月 ${now.getD
 
 const overdueCount = computed(
   () => tasks.today.filter((t) => t.dueDate && t.dueDate < todayStr()).length,
+)
+
+const activeDdls = computed(() => time.ddls.filter((d) => d.status === '生效'))
+const countdownDdls = computed(() => {
+  const overdue = activeDdls.value.filter((d) => dueInfo(d.dueDate).cls === 'overdue')
+  const upcoming = activeDdls.value.filter((d) => {
+    const c = dueInfo(d.dueDate).cls
+    return c !== 'overdue' && c !== 'later'
+  })
+  const later = activeDdls.value.filter((d) => dueInfo(d.dueDate).cls === 'later')
+  return [...overdue, ...upcoming, ...later].slice(0, 6)
+})
+const nextMilestone = computed(() =>
+  [...time.milestones]
+    .filter((m) => m.status !== '已完成' && m.targetDate)
+    .sort((a, b) => (a.targetDate ?? '').localeCompare(b.targetDate ?? ''))[0],
 )
 
 const activeProjects = computed(() => projects.projects.filter((p) => p.status === '进行中' || p.status === '暂停'))
@@ -52,7 +72,25 @@ function projectActiveCount(projectId: number) {
 
     <section>
       <h3>倒计时</h3>
-      <p class="empty">DDL 与学位里程碑将在 P2 接入</p>
+      <template v-if="countdownDdls.length || nextMilestone">
+        <div v-for="d in countdownDdls" :key="d.id" class="cd-row">
+          <span>⏰ {{ d.name }}</span>
+          <span class="badge" :class="dueInfo(d.dueDate).cls">{{ dueInfo(d.dueDate).label }}</span>
+        </div>
+        <div v-if="nextMilestone" class="cd-row ms">
+          <span>🎓 里程碑「{{ nextMilestone.name }}」</span>
+          <span
+            v-if="nextMilestone.targetDate"
+            class="badge"
+            :class="dueInfo(nextMilestone.targetDate).cls"
+          >
+            {{ dueInfo(nextMilestone.targetDate).label }}
+          </span>
+        </div>
+      </template>
+      <p v-else class="empty">
+        暂无临近 DDL —— 到 <RouterLink to="/ddl">DDL 页</RouterLink> 添加
+      </p>
     </section>
 
     <section>
@@ -112,6 +150,48 @@ h3 {
   margin: 0;
   color: var(--muted-fg);
   font-size: 13px;
+}
+
+.empty a {
+  color: var(--accent);
+}
+
+.cd-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 2px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.cd-row.ms span:first-child {
+  color: var(--muted-fg);
+}
+
+.badge {
+  font-size: 11px;
+  border-radius: 9px;
+  padding: 1px 8px;
+  background: var(--hover);
+  color: var(--muted-fg);
+  flex: none;
+}
+
+.badge.overdue {
+  background: color-mix(in srgb, var(--danger) 14%, transparent);
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.badge.today {
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  color: var(--danger);
+}
+
+.badge.soon {
+  background: color-mix(in srgb, var(--warn) 14%, transparent);
+  color: var(--warn);
 }
 
 .cards {

@@ -8,8 +8,13 @@ export function todayStr(): string {
   return fmtDate(new Date())
 }
 
-function daysFromToday(due: string): number {
-  const [y, m, d] = due.split('-').map(Number)
+/** 'YYYY-MM-DD HH:MM' → 'YYYY-MM-DD' */
+export function dateOnly(s: string): string {
+  return s.slice(0, 10)
+}
+
+export function daysFromToday(due: string): number {
+  const [y, m, d] = dateOnly(due).split('-').map(Number)
   const dueMs = Date.UTC(y, m - 1, d)
   const now = new Date()
   const todayMs = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
@@ -29,5 +34,5 @@ export function dueInfo(due: string): DueInfo {
   if (diff === 0) return { label: '今天', cls: 'today' }
   if (diff === 1) return { label: '明天', cls: 'soon' }
   if (diff <= 7) return { label: `${diff} 天后`, cls: 'soon' }
-  return { label: due.slice(5).replace('-', '月') + '日', cls: 'later' }
+  return { label: `${dateOnly(due).slice(5).replace('-', '月')}日`, cls: 'later' }
 }

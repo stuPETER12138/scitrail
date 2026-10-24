@@ -79,6 +79,15 @@ pub fn run() {
             commands::quick::parse_quick,
             commands::entries::create_entry,
             commands::stats::stats_week,
+            commands::ddls::list_ddls,
+            commands::ddls::create_ddl,
+            commands::ddls::update_ddl,
+            commands::ddls::delete_ddl,
+            commands::ddls::rollover_ddl,
+            commands::milestones::list_milestones,
+            commands::milestones::create_milestone,
+            commands::milestones::update_milestone,
+            commands::milestones::delete_milestone,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

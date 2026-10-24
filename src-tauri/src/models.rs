@@ -65,3 +65,57 @@ impl Task {
         })
     }
 }
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Ddl {
+    pub id: i64,
+    pub name: String,
+    pub category: Option<String>,
+    pub due_date: String,
+    pub lead_days: String,
+    pub project_id: Option<i64>,
+    pub status: String,
+    pub repeat_yearly: bool,
+    pub note: Option<String>,
+}
+
+impl Ddl {
+    pub fn from_row(row: &Row<'_>) -> rusqlite::Result<Self> {
+        Ok(Ddl {
+            id: row.get(0)?,
+            name: row.get(1)?,
+            category: row.get(2)?,
+            due_date: row.get(3)?,
+            lead_days: row.get(4)?,
+            project_id: row.get(5)?,
+            status: row.get(6)?,
+            repeat_yearly: row.get::<_, i64>(7)? != 0,
+            note: row.get(8)?,
+        })
+    }
+}
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Milestone {
+    pub id: i64,
+    pub name: String,
+    pub target_date: Option<String>,
+    pub status: String,
+    pub done_at: Option<String>,
+    pub note: Option<String>,
+}
+
+impl Milestone {
+    pub fn from_row(row: &Row<'_>) -> rusqlite::Result<Self> {
+        Ok(Milestone {
+            id: row.get(0)?,
+            name: row.get(1)?,
+            target_date: row.get(2)?,
+            status: row.get(3)?,
+            done_at: row.get(4)?,
+            note: row.get(5)?,
+        })
+    }
+}

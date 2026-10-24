@@ -5,11 +5,13 @@ import Shell from './components/Shell.vue'
 import Unlock from './views/Unlock.vue'
 import { useProjectsStore } from './stores/projects'
 import { useTasksStore } from './stores/tasks'
+import { useTimeStore } from './stores/time'
 import { useAuthStore } from './stores/auth'
 
 const auth = useAuthStore()
 const projects = useProjectsStore()
 const tasks = useTasksStore()
+const time = useTimeStore()
 
 let unlisten: (() => void) | null = null
 
@@ -20,6 +22,7 @@ onMounted(async () => {
     if (!auth.unlocked) return
     void projects.load(true)
     void tasks.refresh()
+    void time.load(true)
   })
 })
 

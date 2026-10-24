@@ -82,6 +82,45 @@ export interface WeekStats {
   weekStart: string
 }
 
+export interface Ddl {
+  id: number
+  name: string
+  category: string | null
+  dueDate: string
+  leadDays: string
+  projectId: number | null
+  status: string
+  repeatYearly: boolean
+  note: string | null
+}
+
+export interface DdlInput {
+  name: string
+  category?: string | null
+  dueDate: string
+  leadDays?: string | null
+  projectId?: number | null
+  repeatYearly?: boolean
+  note?: string | null
+  status?: string
+}
+
+export interface Milestone {
+  id: number
+  name: string
+  targetDate: string | null
+  status: string
+  doneAt: string | null
+  note: string | null
+}
+
+export interface MilestoneInput {
+  name: string
+  targetDate?: string | null
+  status?: string
+  note?: string | null
+}
+
 export interface AppInfo {
   version: string
   dbPath: string
@@ -124,6 +163,21 @@ export const createEntry = (entry: EntryInput) => invoke<number>('create_entry',
 // ---------- 统计 ----------
 
 export const statsWeek = () => invoke<WeekStats>('stats_week')
+
+// ---------- DDL 与里程碑 ----------
+
+export const listDdls = (activeOnly = false) => invoke<Ddl[]>('list_ddls', { activeOnly })
+export const createDdl = (input: DdlInput) => invoke<number>('create_ddl', { input })
+export const updateDdl = (id: number, input: DdlInput) => invoke<void>('update_ddl', { id, input })
+export const deleteDdl = (id: number) => invoke<void>('delete_ddl', { id })
+export const rolloverDdl = (id: number) => invoke<number>('rollover_ddl', { id })
+
+export const listMilestones = () => invoke<Milestone[]>('list_milestones')
+export const createMilestone = (input: MilestoneInput) =>
+  invoke<number>('create_milestone', { input })
+export const updateMilestone = (id: number, input: MilestoneInput) =>
+  invoke<void>('update_milestone', { id, input })
+export const deleteMilestone = (id: number) => invoke<void>('delete_milestone', { id })
 
 // ---------- 跨窗口刷新事件 ----------
 
