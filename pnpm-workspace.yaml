@@ -1,0 +1,4 @@
+# pnpm v12 配置主页（package.json 的 pnpm 字段已废弃）
+# 单包项目无 packages 字段；esbuild 需运行安装脚本校验平台二进制
+allowBuilds:
+  esbuild: true

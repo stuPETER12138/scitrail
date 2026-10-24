@@ -25,10 +25,5 @@
     "typescript": "~5.9",
     "vite": "^7",
     "vue-tsc": "^3"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
   }
 }
