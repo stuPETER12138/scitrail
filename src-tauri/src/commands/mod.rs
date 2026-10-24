@@ -3,6 +3,7 @@ pub mod auth;
 pub mod backup;
 pub mod ddls;
 pub mod entries;
+pub mod expenses;
 pub mod meta;
 pub mod milestones;
 pub mod papers;

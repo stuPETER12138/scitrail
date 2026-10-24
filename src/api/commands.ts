@@ -431,6 +431,46 @@ export const updateRequirement = (id: number, input: RequirementInput) =>
   invoke<void>('update_requirement', { id, input })
 export const deleteRequirement = (id: number) => invoke<void>('delete_requirement', { id })
 
+// ---------- 报销垫付台账（M2-4） ----------
+
+export interface ExpenseItem {
+  id: number
+  date: string
+  title: string
+  amount: number
+  reason: string | null
+  status: string
+  projectId: number | null
+  projectName: string | null
+}
+
+export interface ExpenseSummary {
+  advanced: number
+  submitted: number
+  received: number
+  total: number
+  advancedCount: number
+}
+
+export interface ProjectExpense {
+  projectId: number | null
+  name: string
+  color: string | null
+  total: number
+}
+
+export interface ExpenseLedger {
+  items: ExpenseItem[]
+  summary: ExpenseSummary
+  byProject: ProjectExpense[]
+}
+
+export const EXPENSE_STATUSES = ['垫付中', '已提交', '已到账']
+
+export const expenseLedger = () => invoke<ExpenseLedger>('expense_ledger')
+export const setExpenseStatus = (id: number, status: string) =>
+  invoke<void>('set_expense_status', { id, status })
+
 // ---------- 统计 ----------
 
 export const statsWeek = () => invoke<WeekStats>('stats_week')

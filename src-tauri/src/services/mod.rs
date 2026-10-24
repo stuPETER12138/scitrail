@@ -1,6 +1,7 @@
 pub mod achievements;
 pub mod backup;
 pub mod entries;
+pub mod expenses;
 pub mod papers;
 pub mod quick_parse;
 pub mod settings;

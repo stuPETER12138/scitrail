@@ -145,6 +145,8 @@ pub fn run() {
             commands::achievements::create_requirement,
             commands::achievements::update_requirement,
             commands::achievements::delete_requirement,
+            commands::expenses::expense_ledger,
+            commands::expenses::set_expense_status,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
