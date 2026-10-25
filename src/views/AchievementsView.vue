@@ -17,6 +17,7 @@ import {
   type Achievement,
   type GradRequirement,
 } from '../api/commands'
+import FormDrawer from '../components/FormDrawer.vue'
 import { useProjectsStore } from '../stores/projects'
 
 const projects = useProjectsStore()
@@ -82,7 +83,6 @@ const pendingTotal = computed(
 const achDrawer = ref(false)
 const editingAch = ref<Achievement | null>(null)
 const achError = ref('')
-const confirmAchDelete = ref(false)
 
 const achForm = reactive({
   kind: '期刊论文',
@@ -110,7 +110,6 @@ watch(
     achForm.projectId = a?.projectId ?? null
     achForm.note = a?.note ?? ''
     achError.value = ''
-    confirmAchDelete.value = false
   },
   { immediate: true },
 )
@@ -153,10 +152,6 @@ async function saveAch() {
 
 async function removeAch() {
   if (!editingAch.value) return
-  if (!confirmAchDelete.value) {
-    confirmAchDelete.value = true
-    return
-  }
   await deleteAchievement(editingAch.value.id)
   achDrawer.value = false
   await reload()
@@ -166,7 +161,6 @@ async function removeAch() {
 const reqDrawer = ref(false)
 const editingReq = ref<GradRequirement | null>(null)
 const reqError = ref('')
-const confirmReqDelete = ref(false)
 
 const reqForm = reactive({
   item: '',
@@ -186,7 +180,6 @@ watch(
     reqForm.includePending = r ? csv(r.matchStatus).includes('在投') : false
     reqForm.note = r?.note ?? ''
     reqError.value = ''
-    confirmReqDelete.value = false
   },
   { immediate: true },
 )
@@ -225,10 +218,6 @@ async function saveReq() {
 
 async function removeReq() {
   if (!editingReq.value) return
-  if (!confirmReqDelete.value) {
-    confirmReqDelete.value = true
-    return
-  }
   await deleteRequirement(editingReq.value.id)
   reqDrawer.value = false
   await reload()
@@ -330,116 +319,104 @@ const KIND_COLORS: Record<string, string> = {
   </div>
 
   <!-- 成果抽屉 -->
-  <div v-if="achDrawer" class="mask" @click.self="achDrawer = false">
-    <div class="drawer">
-      <div class="d-head">
-        <span>{{ editingAch ? '编辑成果' : '登记成果' }}</span>
-        <button class="close" type="button" @click="achDrawer = false">✕</button>
-      </div>
-      <div class="d-body">
-        <label class="f span2">
-          <span>类型</span>
-          <select v-model="achForm.kind">
-            <option v-for="k in ACHIEVEMENT_KINDS" :key="k">{{ k }}</option>
-          </select>
-        </label>
-        <label class="f span2">
-          <span>标题</span>
-          <input v-model="achForm.title" />
-        </label>
-        <label class="f">
-          <span>作者排序</span>
-          <input v-model="achForm.authorRank" placeholder="第一作者 / 通讯作者…" />
-        </label>
-        <label class="f">
-          <span>状态</span>
-          <select v-model="achForm.status">
-            <option v-for="s in ACHIEVEMENT_STATUSES" :key="s">{{ s }}</option>
-          </select>
-        </label>
-        <label class="f">
-          <span>日期</span>
-          <input v-model="achForm.date" type="date" />
-        </label>
-        <label class="f">
-          <span>期刊 / 颁发单位</span>
-          <input v-model="achForm.venue" />
-        </label>
-        <label class="f">
-          <span>DOI / 链接</span>
-          <input v-model="achForm.doi" />
-        </label>
-        <label class="f">
-          <span>支撑课题</span>
-          <select v-model="achForm.projectId">
-            <option :value="null">不关联</option>
-            <option v-for="p in projects.projects" :key="p.id" :value="p.id">{{ p.name }}</option>
-          </select>
-        </label>
-        <label class="f span2">
-          <span>备注</span>
-          <textarea v-model="achForm.note" rows="2" />
-        </label>
-        <p v-if="achError" class="error">{{ achError }}</p>
-      </div>
-      <div class="d-foot">
-        <button class="btn danger" type="button" @click="removeAch">
-          {{ confirmAchDelete ? '确认删除？' : '删除' }}
-        </button>
-        <button class="btn primary" type="button" @click="saveAch">保存</button>
-      </div>
+  <FormDrawer
+    v-if="achDrawer"
+    :title="editingAch ? '编辑成果' : '登记成果'"
+    @close="achDrawer = false"
+    @save="saveAch"
+    @delete="removeAch"
+  >
+    <div class="form-grid">
+      <label class="field span2">
+        <span>类型</span>
+        <select v-model="achForm.kind">
+          <option v-for="k in ACHIEVEMENT_KINDS" :key="k">{{ k }}</option>
+        </select>
+      </label>
+      <label class="field span2">
+        <span>标题</span>
+        <input v-model="achForm.title" />
+      </label>
+      <label class="field">
+        <span>作者排序</span>
+        <input v-model="achForm.authorRank" placeholder="第一作者 / 通讯作者…" />
+      </label>
+      <label class="field">
+        <span>状态</span>
+        <select v-model="achForm.status">
+          <option v-for="s in ACHIEVEMENT_STATUSES" :key="s">{{ s }}</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>日期</span>
+        <input v-model="achForm.date" type="date" />
+      </label>
+      <label class="field">
+        <span>期刊 / 颁发单位</span>
+        <input v-model="achForm.venue" />
+      </label>
+      <label class="field">
+        <span>DOI / 链接</span>
+        <input v-model="achForm.doi" />
+      </label>
+      <label class="field">
+        <span>支撑课题</span>
+        <select v-model="achForm.projectId">
+          <option :value="null">不关联</option>
+          <option v-for="p in projects.projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+        </select>
+      </label>
+      <label class="field span2">
+        <span>备注</span>
+        <textarea v-model="achForm.note" rows="2" />
+      </label>
+      <p v-if="achError" class="error">{{ achError }}</p>
     </div>
-  </div>
+  </FormDrawer>
 
   <!-- 要求抽屉 -->
-  <div v-if="reqDrawer" class="mask" @click.self="reqDrawer = false">
-    <div class="drawer">
-      <div class="d-head">
-        <span>{{ editingReq ? '编辑毕业要求' : '录入毕业要求' }}</span>
-        <button class="close" type="button" @click="reqDrawer = false">✕</button>
-      </div>
-      <div class="d-body">
-        <label class="f span2">
-          <span>要求条目</span>
-          <input v-model="reqForm.item" placeholder="如：SCI 一区/二区论文" />
-        </label>
-        <label class="f">
-          <span>需要数量</span>
-          <input v-model.number="reqForm.needCount" type="number" min="1" />
-        </label>
-        <div class="f span2">
-          <span>匹配成果类型（不选 = 不限）</span>
-          <div class="kinds">
-            <button
-              v-for="k in ACHIEVEMENT_KINDS"
-              :key="k"
-              type="button"
-              class="k-chip"
-              :class="{ on: reqForm.kinds.includes(k) }"
-              @click="toggleKind(k)"
-            >
-              {{ k }}
-            </button>
-          </div>
+  <FormDrawer
+    v-if="reqDrawer"
+    :title="editingReq ? '编辑毕业要求' : '录入毕业要求'"
+    @close="reqDrawer = false"
+    @save="saveReq"
+    @delete="removeReq"
+  >
+    <div class="form-grid">
+      <label class="field span2">
+        <span>要求条目</span>
+        <input v-model="reqForm.item" placeholder="如：SCI 一区/二区论文" />
+      </label>
+      <label class="field">
+        <span>需要数量</span>
+        <input v-model.number="reqForm.needCount" type="number" min="1" />
+      </label>
+      <div class="field span2">
+        <span>匹配成果类型（不选 = 不限）</span>
+        <div class="kinds">
+          <button
+            v-for="k in ACHIEVEMENT_KINDS"
+            :key="k"
+            type="button"
+            class="k-chip"
+            :class="{ on: reqForm.kinds.includes(k) }"
+            @click="toggleKind(k)"
+          >
+            {{ k }}
+          </button>
         </div>
-        <label class="f span2 check">
-          <input v-model="reqForm.includePending" type="checkbox" />
-          「在投」成果计入达标（默认只计已录用/已发表/已授权/已获奖/已登记）
-        </label>
-        <label class="f span2">
-          <span>依据（培养方案文件与版本，便于核对）</span>
-          <input v-model="reqForm.note" placeholder="如：《研究生培养方案（2027 版）》学位细则第 5 条" />
-        </label>
-        <p v-if="reqError" class="error">{{ reqError }}</p>
       </div>
-      <div class="d-foot">
-        <button class="btn danger" type="button" @click="removeReq">
-          {{ confirmReqDelete ? '确认删除？' : '删除' }}
-        </button>
-        <button class="btn primary" type="button" @click="saveReq">保存</button>
-      </div>
+      <label class="field check span2">
+        <input v-model="reqForm.includePending" type="checkbox" />
+        「在投」成果计入达标（默认只计已录用/已发表/已授权/已获奖/已登记）
+      </label>
+      <label class="field span2">
+        <span>依据（培养方案文件与版本，便于核对）</span>
+        <input v-model="reqForm.note" placeholder="如：《研究生培养方案（2027 版）》学位细则第 5 条" />
+      </label>
+      <p v-if="reqError" class="error">{{ reqError }}</p>
     </div>
-  </div>
+  </FormDrawer>
 </template>
 
 <style scoped>
@@ -458,47 +435,6 @@ const KIND_COLORS: Record<string, string> = {
   font-size: var(--text-lg);
   font-weight: 500;
   margin: 0;
-}
-
-section {
-  margin-top: 20px;
-}
-
-h3 {
-  font-size: var(--text-md);
-  font-weight: 500;
-  color: var(--muted-fg);
-  margin: 0 0 8px;
-}
-
-.btn {
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 7px 14px;
-  cursor: pointer;
-}
-
-.btn.sm {
-  padding: 4px 10px;
-  font-size: var(--text-sm);
-}
-
-.btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
-}
-
-.btn.danger {
-  color: var(--danger);
-}
-
-.msg {
-  font-size: var(--text-sm);
-  color: var(--ok);
-  margin: 8px 0 0;
-  word-break: break-all;
 }
 
 /* 对照卡片 */
@@ -603,11 +539,6 @@ h3 {
   color: var(--muted-fg);
 }
 
-.empty {
-  color: var(--muted-fg);
-  font-size: var(--text-md);
-}
-
 /* 成果列表 */
 .a-list {
   margin-top: 10px;
@@ -680,90 +611,7 @@ h3 {
   flex: none;
 }
 
-/* 抽屉（与论文页同款） */
-.mask {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: flex-end;
-  z-index: 50;
-}
-
-.drawer {
-  width: 380px;
-  max-width: 100%;
-  height: 100%;
-  background: var(--card);
-  border-left: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-}
-
-.d-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 13px 16px;
-  border-bottom: 1px solid var(--line);
-  font-weight: 500;
-}
-
-.close {
-  border: none;
-  background: none;
-  color: var(--muted-fg);
-  cursor: pointer;
-}
-
-.d-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 14px 16px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  align-content: start;
-}
-
-.span2 {
-  grid-column: span 2;
-}
-
-.f {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: var(--text-sm);
-  color: var(--muted-fg);
-}
-
-.f input,
-.f select,
-.f textarea {
-  padding: 7px 9px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: var(--bg);
-  color: var(--fg);
-  outline: none;
-  font-size: var(--text-md);
-}
-
-.f input:focus,
-.f select:focus,
-.f textarea:focus {
-  border-color: var(--accent);
-}
-
-.check {
-  flex-direction: row;
-  align-items: center;
-  gap: 7px;
-  font-size: var(--text-sm);
-  cursor: pointer;
-}
-
+/* 要求抽屉里的类型多选 chip */
 .kinds {
   display: flex;
   flex-wrap: wrap;
@@ -784,19 +632,5 @@ h3 {
   background: color-mix(in srgb, var(--accent) 14%, transparent);
   border-color: var(--accent);
   color: var(--accent);
-}
-
-.error {
-  grid-column: span 2;
-  color: var(--danger);
-  font-size: var(--text-sm);
-  margin: 0;
-}
-
-.d-foot {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-top: 1px solid var(--line);
 }
 </style>

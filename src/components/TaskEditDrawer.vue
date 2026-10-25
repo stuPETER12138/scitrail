@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
 import type { Task } from '../api/commands'
+import FormDrawer from './FormDrawer.vue'
 import { useProjectsStore } from '../stores/projects'
 import { useTasksStore } from '../stores/tasks'
 
@@ -20,7 +21,6 @@ const form = reactive({
   status: '待办',
 })
 const error = ref('')
-const confirmDelete = ref(false)
 
 watch(
   () => props.task,
@@ -34,7 +34,6 @@ watch(
       form.repeatRule = t.repeatRule ?? ''
       form.status = t.status
       error.value = ''
-      confirmDelete.value = false
     }
   },
   { immediate: true },
@@ -76,182 +75,59 @@ async function save() {
 
 async function remove() {
   if (!props.task) return
-  if (!confirmDelete.value) {
-    confirmDelete.value = true
-    return
-  }
   await tasks.remove(props.task.id)
   emit('saved')
 }
 </script>
 
 <template>
-  <div v-if="task" class="drawer">
-    <div class="head">
-      <span>编辑任务</span>
-      <button class="close" type="button" @click="emit('close')">✕</button>
-    </div>
-    <div class="body">
-      <label class="field">
+  <FormDrawer v-if="task" title="编辑任务" @close="emit('close')" @save="save" @delete="remove">
+    <div class="form-grid">
+      <label class="field span2">
         <span>标题</span>
         <input v-model="form.title" type="text" />
       </label>
-      <label class="field">
+      <label class="field span2">
         <span>备注</span>
         <textarea v-model="form.note" rows="3" />
       </label>
-      <label class="field">
+      <label class="field span2">
         <span>课题</span>
         <select v-model="form.projectId">
           <option :value="null">收件箱（不关联）</option>
           <option v-for="p in projects.projects" :key="p.id" :value="p.id">{{ p.name }}</option>
         </select>
       </label>
-      <div class="two">
-        <label class="field">
-          <span>优先级</span>
-          <select v-model.number="form.priority">
-            <option :value="0">!高</option>
-            <option :value="1">!中</option>
-            <option :value="2">低（默认）</option>
-          </select>
-        </label>
-        <label class="field">
-          <span>截止</span>
-          <input v-model="form.dueDate" type="date" />
-        </label>
-      </div>
-      <div class="two">
-        <label class="field">
-          <span>重复</span>
-          <select v-model="form.repeatRule">
-            <option v-for="o in REPEAT_OPTIONS" :key="o.value" :value="o.value">
-              {{ o.label }}
-            </option>
-          </select>
-        </label>
-        <label class="field">
-          <span>状态</span>
-          <select v-model="form.status">
-            <option>待办</option>
-            <option>进行中</option>
-            <option>完成</option>
-            <option>放弃</option>
-          </select>
-        </label>
-      </div>
+      <label class="field">
+        <span>优先级</span>
+        <select v-model.number="form.priority">
+          <option :value="0">!高</option>
+          <option :value="1">!中</option>
+          <option :value="2">低（默认）</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>截止</span>
+        <input v-model="form.dueDate" type="date" />
+      </label>
+      <label class="field">
+        <span>重复</span>
+        <select v-model="form.repeatRule">
+          <option v-for="o in REPEAT_OPTIONS" :key="o.value" :value="o.value">
+            {{ o.label }}
+          </option>
+        </select>
+      </label>
+      <label class="field">
+        <span>状态</span>
+        <select v-model="form.status">
+          <option>待办</option>
+          <option>进行中</option>
+          <option>完成</option>
+          <option>放弃</option>
+        </select>
+      </label>
       <p v-if="error" class="error">{{ error }}</p>
     </div>
-    <div class="foot">
-      <button class="btn danger" type="button" @click="remove">
-        {{ confirmDelete ? '确认删除？' : '删除' }}
-      </button>
-      <button class="btn primary" type="button" @click="save">保存</button>
-    </div>
-  </div>
+  </FormDrawer>
 </template>
-
-<style scoped>
-.drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 320px;
-  background: var(--card);
-  border-left: 1px solid var(--line);
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  z-index: 40;
-}
-
-.head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--line);
-  font-weight: 500;
-}
-
-.close {
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: var(--muted-fg);
-  font-size: var(--text-md);
-}
-
-.body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: var(--text-sm);
-  color: var(--muted-fg);
-  flex: 1;
-}
-
-.field input,
-.field select,
-.field textarea {
-  padding: 7px 9px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: var(--bg);
-  color: var(--fg);
-  outline: none;
-  font-size: var(--text-md);
-}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
-  border-color: var(--accent);
-}
-
-.two {
-  display: flex;
-  gap: 10px;
-}
-
-.foot {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-top: 1px solid var(--line);
-}
-
-.btn {
-  padding: 7px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
-}
-
-.btn.danger {
-  color: var(--danger);
-}
-
-.error {
-  color: var(--danger);
-  font-size: var(--text-sm);
-  margin: 0;
-}
-</style>

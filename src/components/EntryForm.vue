@@ -157,14 +157,14 @@ async function save() {
     </div>
 
     <div v-if="defs.length" class="fields">
-      <label v-for="d in defs" :key="d.key" class="f">
+      <label v-for="d in defs" :key="d.key" class="field">
         <span>{{ d.label }}</span>
         <textarea v-if="d.area" v-model="form.fields[d.key]" rows="2" />
         <input v-else v-model="form.fields[d.key]" />
       </label>
     </div>
 
-    <label class="f">
+    <label class="field">
       <span>正文（Markdown）</span>
       <textarea v-model="form.content" rows="3" placeholder="详细记录，可空" />
     </label>
@@ -211,9 +211,7 @@ async function save() {
 
 .row select,
 .row input,
-.refs input,
-.f input,
-.f textarea {
+.refs input {
   padding: 7px 9px;
   border: 1px solid var(--line);
   border-radius: 7px;
@@ -239,14 +237,6 @@ async function save() {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px 10px;
-}
-
-.f {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: var(--text-sm);
-  color: var(--muted-fg);
 }
 
 .refs-h {
@@ -283,28 +273,8 @@ async function save() {
   color: var(--danger);
 }
 
-.error {
-  color: var(--danger);
-  font-size: var(--text-sm);
-  margin: 0;
-}
-
 .actions {
   display: flex;
   gap: 8px;
-}
-
-.btn {
-  border: 1px solid var(--line);
-  background: var(--bg);
-  border-radius: 8px;
-  padding: 7px 16px;
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
 }
 </style>

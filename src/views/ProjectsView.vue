@@ -106,20 +106,6 @@ async function removeProject(id: number, name: string) {
 </template>
 
 <style scoped>
-.btn {
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 7px 14px;
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
-}
-
 .create {
   margin-top: 14px;
   border: 1px solid var(--line);
@@ -180,12 +166,6 @@ async function removeProject(id: number, name: string) {
 
 .swatch.on {
   border-color: var(--fg);
-}
-
-.error {
-  color: var(--danger);
-  font-size: var(--text-sm);
-  margin: 0;
 }
 
 .list {

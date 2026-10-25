@@ -160,20 +160,6 @@ async function removeMs(id: number, name: string) {
 </template>
 
 <style scoped>
-.btn {
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 7px 14px;
-  cursor: pointer;
-}
-
-.btn.primary,
-.btn.ghost {
-  background: var(--bg);
-  color: var(--muted-fg);
-}
-
 section {
   margin-top: 16px;
 }
@@ -206,30 +192,9 @@ h3.week {
 }
 
 .badge {
-  font-size: var(--text-xs);
-  border-radius: 9px;
-  padding: 1px 8px;
-  background: var(--hover);
-  color: var(--muted-fg);
   flex: none;
   min-width: 56px;
   text-align: center;
-}
-
-.badge.overdue {
-  background: color-mix(in srgb, var(--danger) 14%, transparent);
-  color: var(--danger);
-  font-weight: 500;
-}
-
-.badge.today {
-  background: color-mix(in srgb, var(--danger) 12%, transparent);
-  color: var(--danger);
-}
-
-.badge.soon {
-  background: color-mix(in srgb, var(--warn) 14%, transparent);
-  color: var(--warn);
 }
 
 .name {

@@ -159,20 +159,6 @@ async function doExport() {
   color: var(--fg);
 }
 
-.btn {
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 7px 14px;
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
-}
-
 .btn:disabled {
   opacity: 0.55;
   cursor: default;
@@ -215,8 +201,6 @@ async function doExport() {
 }
 
 .msg {
-  font-size: var(--text-sm);
-  color: var(--ok);
   margin: 10px 0 0;
 }
 

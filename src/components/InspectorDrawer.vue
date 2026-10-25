@@ -318,33 +318,6 @@ function onSaved() {
   margin-top: 8px;
 }
 
-.btn {
-  border: 1px solid var(--line);
-  background: var(--bg);
-  border-radius: 8px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-size: var(--text-md);
-}
-
-.btn.danger {
-  color: var(--danger);
-}
-
-.error,
-.msg {
-  font-size: var(--text-sm);
-  margin: 0;
-}
-
-.error {
-  color: var(--danger);
-}
-
-.msg {
-  color: var(--ok);
-}
-
 .dim {
   color: var(--muted-fg);
   font-size: var(--text-md);

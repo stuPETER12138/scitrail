@@ -155,8 +155,6 @@ h3 {
 
 .empty {
   margin: 0;
-  color: var(--muted-fg);
-  font-size: var(--text-md);
 }
 
 .empty a {
@@ -177,28 +175,7 @@ h3 {
 }
 
 .badge {
-  font-size: var(--text-xs);
-  border-radius: 9px;
-  padding: 1px 8px;
-  background: var(--hover);
-  color: var(--muted-fg);
   flex: none;
-}
-
-.badge.overdue {
-  background: color-mix(in srgb, var(--danger) 14%, transparent);
-  color: var(--danger);
-  font-weight: 500;
-}
-
-.badge.today {
-  background: color-mix(in srgb, var(--danger) 12%, transparent);
-  color: var(--danger);
-}
-
-.badge.soon {
-  background: color-mix(in srgb, var(--warn) 14%, transparent);
-  color: var(--warn);
 }
 
 .cards {

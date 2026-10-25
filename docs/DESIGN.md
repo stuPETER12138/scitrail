@@ -66,6 +66,7 @@
 ## 7. 变更流程
 
 - 改数值 → 只改 `tokens.css`，全项目生效。
+- 共享组件样式（`.btn`/`.field`/`.badge`/`.error` 等与 `FormDrawer` 抽屉外壳）集中在 `src/styles/ui.css`，各视图 scoped 样式**不得**逐字复制这些规则；确需覆盖时只写差异属性，避免与全局规则同特异性争抢顺序。
 - 新组件 → 先查本文件第 4 节找同类规则；确需新规则，先更新本文件再写代码。
 - 提交前自检：`grep -rE "font-size:\s*\d+px" src/` 必须为空（SVG 属性除外）；`grep -rE "#[0-9a-fA-F]{3,6}" src/ --include="*.vue"` 中出现的硬编码色需逐一说明理由。
 

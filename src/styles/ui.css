@@ -1,0 +1,159 @@
+/* 共享组件样式 —— 从各视图逐字重复的 scoped CSS 收拢而来；
+   数值仍以 tokens.css 为唯一来源，规则见 docs/DESIGN.md 第 4 节 */
+
+.btn {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 8px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--hover);
+}
+
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+.btn.danger {
+  color: var(--danger);
+}
+
+.btn.sm {
+  padding: 4px 10px;
+  font-size: var(--text-sm);
+}
+
+.btn.ghost {
+  background: var(--bg);
+  color: var(--muted-fg);
+}
+
+/* 表单字段：竖排 label + 控件（§4 表单控件规格） */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--text-sm);
+  color: var(--muted-fg);
+}
+
+.field input,
+.field select,
+.field textarea {
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--fg);
+  outline: none;
+  font-size: var(--text-md);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+}
+
+.field.check {
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.span2 {
+  grid-column: span 2;
+}
+
+/* 抽屉表单体：两列网格 */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-content: start;
+}
+
+.form-grid > .error {
+  grid-column: 1 / -1;
+}
+
+/* 徽章：语义色 color-mix 12–14%（§4） */
+.badge {
+  font-size: var(--text-xs);
+  border-radius: 9px;
+  padding: 1px 8px;
+  background: var(--hover);
+  color: var(--muted-fg);
+}
+
+.badge.overdue {
+  background: color-mix(in srgb, var(--danger) 14%, transparent);
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.badge.today {
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  color: var(--danger);
+}
+
+.badge.soon,
+.badge.warn {
+  background: color-mix(in srgb, var(--warn) 14%, transparent);
+  color: var(--warn);
+}
+
+.badge.urgent {
+  background: var(--danger);
+  color: var(--accent-fg);
+  font-weight: 500;
+}
+
+.badge.dim {
+  opacity: 0.8;
+}
+
+/* 文本辅助 */
+.error {
+  color: var(--danger);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+
+.empty {
+  color: var(--muted-fg);
+  font-size: var(--text-md);
+}
+
+.hint,
+.note {
+  color: var(--muted-fg);
+  font-size: var(--text-sm);
+}
+
+.note {
+  margin: 8px 0 0;
+}
+
+.msg {
+  color: var(--ok);
+  font-size: var(--text-sm);
+  word-break: break-all;
+}
+
+.page section {
+  margin-top: 20px;
+}
+
+.page h3 {
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--muted-fg);
+  margin: 0 0 8px;
+}

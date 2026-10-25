@@ -7,6 +7,7 @@ import {
   updatePaper,
   type Paper,
 } from '../api/commands'
+import FormDrawer from '../components/FormDrawer.vue'
 import { useProjectsStore } from '../stores/projects'
 import { useTimeStore } from '../stores/time'
 import { dueInfo, todayStr } from '../utils/date'
@@ -70,7 +71,6 @@ async function onDrop(stage: string, e: DragEvent) {
 const editing = ref<Paper | null>(null)
 const creating = ref(false)
 const error = ref('')
-const confirmDelete = ref(false)
 
 const form = reactive({
   title: '',
@@ -96,7 +96,6 @@ watch(
     form.projectId = p?.projectId ?? null
     form.note = p?.note ?? ''
     error.value = ''
-    confirmDelete.value = false
   },
   { immediate: true },
 )
@@ -145,10 +144,6 @@ async function save() {
 
 async function remove() {
   if (!editing.value) return
-  if (!confirmDelete.value) {
-    confirmDelete.value = true
-    return
-  }
   await deletePaper(editing.value.id)
   closeDrawer()
   await reload()
@@ -200,62 +195,56 @@ async function remove() {
     </div>
 
     <!-- 编辑/新建抽屉 -->
-    <div v-if="drawerOpen" class="mask" @click.self="closeDrawer">
-      <div class="drawer">
-        <div class="d-head">
-          <span>{{ editing ? '编辑论文' : '新建论文' }}</span>
-          <button class="close" type="button" @click="closeDrawer">✕</button>
-        </div>
-        <div class="d-body">
-          <label class="f span2">
-            <span>标题（暂定名亦可）</span>
-            <input v-model="form.title" placeholder="如：MoS₂ 边界缺陷调控（暂定）" />
-          </label>
-          <label class="f span2">
-            <span>目标期刊 / 会议</span>
-            <input v-model="form.venue" placeholder="如：ACS Applied Materials & Interfaces" />
-          </label>
-          <label class="f">
-            <span>阶段</span>
-            <select v-model="form.stage">
-              <option v-for="st in STAGES" :key="st">{{ st }}</option>
-            </select>
-          </label>
-          <label class="f">
-            <span>关联课题</span>
-            <select v-model="form.projectId">
-              <option :value="null">不关联</option>
-              <option v-for="pr in projects.projects" :key="pr.id" :value="pr.id">
-                {{ pr.name }}
-              </option>
-            </select>
-          </label>
-          <label class="f">
-            <span>投稿日期</span>
-            <input v-model="form.submitDate" type="date" />
-          </label>
-          <label class="f">
-            <span>预计放榜</span>
-            <input v-model="form.expectReply" type="date" />
-          </label>
-          <label class="f span2">
-            <span>返修截止</span>
-            <input v-model="form.reviseDeadline" type="date" />
-          </label>
-          <label class="f span2">
-            <span>备注（版本 / 审稿人意见摘要）</span>
-            <textarea v-model="form.note" rows="3" />
-          </label>
-          <p v-if="error" class="error">{{ error }}</p>
-        </div>
-        <div class="d-foot">
-          <button class="btn danger" type="button" @click="remove">
-            {{ confirmDelete ? '确认删除？' : '删除' }}
-          </button>
-          <button class="btn primary" type="button" @click="save">保存</button>
-        </div>
+    <FormDrawer
+      v-if="drawerOpen"
+      :title="editing ? '编辑论文' : '新建论文'"
+      @close="closeDrawer"
+      @save="save"
+      @delete="remove"
+    >
+      <div class="form-grid">
+        <label class="field span2">
+          <span>标题（暂定名亦可）</span>
+          <input v-model="form.title" placeholder="如：MoS₂ 边界缺陷调控（暂定）" />
+        </label>
+        <label class="field span2">
+          <span>目标期刊 / 会议</span>
+          <input v-model="form.venue" placeholder="如：ACS Applied Materials & Interfaces" />
+        </label>
+        <label class="field">
+          <span>阶段</span>
+          <select v-model="form.stage">
+            <option v-for="st in STAGES" :key="st">{{ st }}</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>关联课题</span>
+          <select v-model="form.projectId">
+            <option :value="null">不关联</option>
+            <option v-for="pr in projects.projects" :key="pr.id" :value="pr.id">
+              {{ pr.name }}
+            </option>
+          </select>
+        </label>
+        <label class="field">
+          <span>投稿日期</span>
+          <input v-model="form.submitDate" type="date" />
+        </label>
+        <label class="field">
+          <span>预计放榜</span>
+          <input v-model="form.expectReply" type="date" />
+        </label>
+        <label class="field span2">
+          <span>返修截止</span>
+          <input v-model="form.reviseDeadline" type="date" />
+        </label>
+        <label class="field span2">
+          <span>备注（版本 / 审稿人意见摘要）</span>
+          <textarea v-model="form.note" rows="3" />
+        </label>
+        <p v-if="error" class="error">{{ error }}</p>
       </div>
-    </div>
+    </FormDrawer>
   </div>
 </template>
 
@@ -281,24 +270,6 @@ async function remove() {
 .hint {
   color: var(--muted-fg);
   font-size: var(--text-sm);
-}
-
-.btn {
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 7px 14px;
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
-}
-
-.btn.danger {
-  color: var(--danger);
 }
 
 .board {
@@ -356,134 +327,10 @@ async function remove() {
   gap: 4px;
 }
 
-.badge {
-  font-size: var(--text-2xs);
-  border-radius: 8px;
-  padding: 1px 7px;
-  background: var(--hover);
-  color: var(--muted-fg);
-}
-
-.badge.urgent {
-  background: var(--danger);
-  color: #fff;
-  font-weight: 500;
-}
-
-.badge.overdue {
-  background: color-mix(in srgb, var(--danger) 14%, transparent);
-  color: var(--danger);
-}
-
-.badge.soon,
-.badge.warn {
-  background: color-mix(in srgb, var(--warn) 14%, transparent);
-  color: var(--warn);
-}
-
-.badge.today {
-  background: color-mix(in srgb, var(--danger) 12%, transparent);
-  color: var(--danger);
-}
-
-.badge.dim {
-  opacity: 0.8;
-}
-
 .col-empty {
   color: var(--muted-fg);
   text-align: center;
   font-size: var(--text-xs);
   opacity: 0.5;
-}
-
-/* 抽屉 */
-.mask {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: flex-end;
-  z-index: 50;
-}
-
-.drawer {
-  width: 380px;
-  max-width: 100%;
-  height: 100%;
-  background: var(--card);
-  border-left: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-}
-
-.d-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 13px 16px;
-  border-bottom: 1px solid var(--line);
-  font-weight: 500;
-}
-
-.close {
-  border: none;
-  background: none;
-  color: var(--muted-fg);
-  cursor: pointer;
-}
-
-.d-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 14px 16px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  align-content: start;
-}
-
-.span2 {
-  grid-column: span 2;
-}
-
-.f {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: var(--text-sm);
-  color: var(--muted-fg);
-}
-
-.f input,
-.f select,
-.f textarea {
-  padding: 7px 9px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: var(--bg);
-  color: var(--fg);
-  outline: none;
-  font-size: var(--text-md);
-}
-
-.f input:focus,
-.f select:focus,
-.f textarea:focus {
-  border-color: var(--accent);
-}
-
-.error {
-  grid-column: span 2;
-  color: var(--danger);
-  font-size: var(--text-sm);
-  margin: 0;
-}
-
-.d-foot {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-top: 1px solid var(--line);
 }
 </style>

@@ -270,17 +270,6 @@ function pickDay(date: string) {
   margin-top: 2px;
 }
 
-section {
-  margin-top: 20px;
-}
-
-h3 {
-  font-size: var(--text-md);
-  font-weight: 500;
-  color: var(--muted-fg);
-  margin: 0 0 8px;
-}
-
 .row-h {
   display: flex;
   align-items: center;
@@ -402,31 +391,6 @@ h3 {
 
 .small {
   font-size: var(--text-sm);
-}
-
-.btn {
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 8px;
-  padding: 7px 14px;
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
-}
-
-.msg {
-  font-size: var(--text-sm);
-  color: var(--ok);
-  margin: 8px 0 0;
-  word-break: break-all;
-}
-
-.error {
-  color: var(--danger);
 }
 
 /* 弹层 */

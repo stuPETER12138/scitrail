@@ -103,7 +103,7 @@ async function save() {
         <input v-model="form.note" placeholder="投稿系统链接等" />
       </label>
     </div>
-    <label class="check">
+    <label class="field check">
       <input v-model="form.repeatYearly" type="checkbox" />
       年度事项（办结时可一键复制到明年）
     </label>
@@ -136,72 +136,14 @@ async function save() {
   .grid {
     grid-template-columns: 1fr;
   }
-}
 
-.span2 {
-  grid-column: span 2;
-}
-
-@media (max-width: 700px) {
-  .span2 {
+  .grid .span2 {
     grid-column: span 1;
   }
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: var(--text-sm);
-  color: var(--muted-fg);
-}
-
-.field input,
-.field select {
-  padding: 7px 9px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: var(--bg);
-  color: var(--fg);
-  outline: none;
-  font-size: var(--text-md);
-}
-
-.field input:focus,
-.field select:focus {
-  border-color: var(--accent);
-}
-
-.check {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: var(--text-md);
-  cursor: pointer;
-}
-
-.error {
-  color: var(--danger);
-  font-size: var(--text-sm);
-  margin: 0;
 }
 
 .actions {
   display: flex;
   gap: 8px;
-}
-
-.btn {
-  border: 1px solid var(--line);
-  background: var(--bg);
-  border-radius: 8px;
-  padding: 7px 16px;
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
 }
 </style>
