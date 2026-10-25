@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import {
   appInfo,
   changePassword,
@@ -11,12 +11,33 @@ import {
   type AppInfo,
   type BackupLog,
 } from '../api/commands'
+import { useUpdater } from '../api/updater'
 import { useAuthStore } from '../stores/auth'
 
 const auth = useAuthStore()
 const info = ref<AppInfo | null>(null)
 const loadError = ref('')
 const message = ref('')
+
+const { state: updState, newVersion, error: updError, checkUpdate, installUpdate, progressPercent } =
+  useUpdater()
+
+const updStatus = computed(() => {
+  switch (updState.value) {
+    case 'checking':
+      return '正在检查…'
+    case 'available':
+      return `发现新版本 v${newVersion.value}，下载安装完成后会自动重启`
+    case 'downloading':
+      return `正在下载… ${progressPercent()}%`
+    case 'uptodate':
+      return '已是最新版本'
+    case 'failed':
+      return `检查失败：${updError.value}`
+    default:
+      return ''
+  }
+})
 
 const backups = ref<BackupLog[]>([])
 const restoring = ref<string | null>(null)
@@ -117,6 +138,22 @@ function kb(size: number | null): string {
     <p v-else-if="loadError" class="placeholder">{{ loadError }}</p>
 
     <section>
+      <h3>软件更新</h3>
+      <div class="btns">
+        <button class="btn" type="button" @click="checkUpdate()">检查更新</button>
+        <button
+          v-if="updState === 'available'"
+          class="btn primary"
+          type="button"
+          @click="installUpdate"
+        >
+          下载并重启（v{{ newVersion }}）
+        </button>
+      </div>
+      <p v-if="updStatus" class="note">{{ updStatus }}</p>
+    </section>
+
+    <section>
       <h3>备份（每日 00:30 自动，保留 30 份）</h3>
       <div class="btns">
         <button class="btn" type="button" @click="doBackup">立即备份</button>
@@ -163,17 +200,6 @@ function kb(size: number | null): string {
 </template>
 
 <style scoped>
-section {
-  margin-top: 20px;
-}
-
-h3 {
-  font-size: var(--text-md);
-  font-weight: 500;
-  color: var(--muted-fg);
-  margin: 0 0 8px;
-}
-
 dl {
   margin: 0;
   display: grid;
@@ -198,22 +224,6 @@ dd {
 .btns {
   display: flex;
   gap: 8px;
-}
-
-.btn {
-  padding: 7px 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--card);
-  cursor: pointer;
-}
-
-.btn:hover {
-  background: var(--hover);
-}
-
-.btn.danger {
-  color: var(--danger);
 }
 
 .bk-list {
@@ -260,15 +270,5 @@ dd {
   background: var(--bg);
   color: var(--fg);
   outline: none;
-}
-
-.note {
-  color: var(--muted-fg);
-  font-size: var(--text-sm);
-  margin: 8px 0 0;
-}
-
-.msg {
-  color: var(--ok);
 }
 </style>

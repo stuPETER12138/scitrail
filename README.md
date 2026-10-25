@@ -40,6 +40,14 @@
 
 这是 SmartScreen 对无签名新软件的标准提示，并非安装包损坏。可用 Release 附带的 `sha256.txt` 核对文件哈希后放心安装（PowerShell：`Get-FileHash SciTrail_*_x64-setup.exe`）。
 
+## 自动更新
+
+应用内置更新器：启动后自动检查 GitHub Release，发现新版本会在右下角弹横幅，也可以到 **设置 → 软件更新** 手动检查。更新包经 minisign 密钥签名校验后才安装（未购买代码签名证书不影响其有效性）。
+
+> 注意：更新器自 **v0.1.4** 起内置，v0.1.3 及更早版本需手动下载安装包覆盖升级一次。
+
+开发者：本地打包需设置 `TAURI_SIGNING_PRIVATE_KEY` 环境变量（密钥生成见 `pnpm tauri signer generate --help`），CI 从仓库 Secrets `TAURI_SIGNING_PRIVATE_KEY` / `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` 读取。**私钥丢失后已发布版本将无法自动升级**，请妥善备份。
+
 ## 技术栈
 
 Tauri 2（Rust 内核 + WebView2）· rusqlite(bundled) + SQLite WAL + FTS5 · Vue 3 + Vite + TypeScript + Pinia · 不引重型 UI 库
